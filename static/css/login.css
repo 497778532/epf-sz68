@@ -1,0 +1,158 @@
+.title-case {
+    height: 5rem;
+    border-bottom: 1px solid #C4C3C3;
+    padding: 0 1.5rem;
+    overflow: hidden;
+}
+
+.title-case>div {
+    height: 5rem;
+    line-height: 6rem;
+}
+
+.title-case>div:first-child {
+    float: left;
+}
+
+.title-case>div:first-child img {
+    width: 19.3rem;
+}
+
+.title-case>div:nth-child(2) {
+    float: right;
+    width: 2rem;
+}
+
+.title-case>div:nth-child(2) img {
+    width: 2rem;
+    cursor: pointer;
+}
+
+.login-from {
+    margin-top: 5rem;
+    padding: 0 4.8rem;
+}
+
+.form-item {
+    height: 4rem;
+    line-height: 4rem;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(225, 225, 225, 1);
+    padding: 0 .5rem;
+}
+
+.login-account img,
+.login-password img,
+.login-phone img {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-top: .9rem;
+    float: left;
+}
+
+.login-verification img:first-child {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-top: .9rem;
+    float: left;
+}
+
+.login-verification img:last-child {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-top: .9rem;
+    float: left;
+}
+
+.login-input {
+    height: 4rem;
+    line-height: 4rem;
+    float: left;
+    box-sizing: border-box;
+    width: 17rem;
+    padding-left: 1rem;
+    font-size: 1.6rem;
+}
+
+.input-placeholder {
+    color: rgba(153, 153, 153, 1);
+    font-size: 1.6rem;
+}
+
+.login-password,
+.login-verification {
+    margin-top: 1.3rem;
+}
+.login-verification {
+	display:flex
+}
+
+
+.verification canvas {
+    width: 7.8rem;
+    height: 3.5rem;
+
+}
+
+.login-submit {
+    margin-top: 3.8rem;
+    overflow: hidden;
+}
+
+.login-submit button {
+    width: 100%;
+    height: 4.4rem;
+    line-height: 4.4rem;
+    background: rgba(29, 158, 239, 1);
+    border-radius: 2.2rem;
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-align: center;
+    padding: 0;
+}
+
+.login-forget {
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.login-forget>div:first-child {
+    float: left;
+    font-size: 1.1rem;
+    color: #999999;
+}
+
+.login-forget>div:nth-child(2) {
+    font-size: 1.1rem;
+    color: #008CD6;
+    cursor: pointer;
+    float: right;
+}
+
+
+.forgetPassword {
+    margin-top: 5rem;
+    padding: 0 4.8rem;
+    display: none;
+    z-index: 99;
+}
+
+.registerVerification {
+    width: 7.8rem;
+    height: 2.4rem;
+    background: rgba(0, 140, 214, 1);
+    border-radius: 1.2rem;
+    float: right;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 2.4rem;
+    color: #FEFEFE;
+    margin-top: 1rem;
+}
+.forgetPassword .login-input{
+    width: 90%;
+}
+.forgetPassword .login-verification .login-input{
+    width: 56% !important;
+}

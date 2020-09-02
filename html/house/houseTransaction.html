@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+
+<head>
+  <meta charset="UTF-8">
+<meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width" name="viewport">
+
+  <title>房产交易</title>
+  <link rel="stylesheet" href="${basePath}/webwap/css/mui.min.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/house.css">
+  <link rel="stylesheet" href="${basePath}/tradewebpc/css/pager.css">
+  <script>
+    var basePath = "${basePath}";
+    var tatol = ${ result.tatol!};
+    var pageSize = ${ result.pageSize!};
+    var total_page = Math.ceil(tatol / pageSize);
+    var pageinfo = { "total_page": total_page, "tatol": ${ result.tatol },"currentPage": ${ result.currentPage }, "pageSize": ${ result.pageSize },
+    "code": "${result.code!}", "type": "${result.type!}", "name": "${result.name!}", "area": "${result.area!}", "status": "${result.status!}", "currentSelectTime": "${result.currentSelectTime!}"};
+  </script>
+</head>
+
+<body>
+
+  <!-- 头部 -->
+  <#include "/webwap/common/header.html">
+    <div class="content-core">
+      <!-- 筛选条件 -->
+      <div class="screen">
+        <div class="search-core">
+          <div class="search-left">
+            <img src="${basePath}/webwap/images/icon_search.png" alt="">
+            <input type="text" placeholder="请输入宗地号" id="search_name">
+          </div>
+          <div class="search-btn" onclick="search()">查询</div>
+        </div>
+
+        <div class="screen-core">
+          <div class="screen-list">
+            <div class="screen-item">
+              <span>区域：</span>
+              <div class="screen-more screen-area" data-show=".area-shadow" id="area">
+                <span>全部</span>
+                <div class="triangledownfills"></div>
+              </div>
+            </div>
+            <div class="screen-item">
+              <span>状态：</span>
+              <div class="screen-more screen-state" data-show=".state-shadow" id="status">
+                <span>全部</span>
+                <div class="triangledownfills"></div>
+              </div>
+            </div>
+          </div>
+          <div class="screen-list screen-list2">
+            <div class="screen-item">
+              <span>交易方式：</span>
+              <div class="screen-more screen-exchange" data-show=".exchange-shadow">
+                <span>全部</span>
+                <div class="triangledownfills"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 区域选择 -->
+        <div class="shadow area-shadow">
+          <div class="shadow-core">
+            <div class="shadow-item area-shadow-item">
+              <div class="shadow-active">全部</div>
+              <#list sysAreas as area>
+                <div name="area" value="${area.id!}">${area.name!}</div>
+              </#list>
+            </div>
+          </div>
+        </div>
+        <!-- 状态选择 -->
+        <div class="shadow state-shadow">
+          <div class="shadow-core">
+            <div class="shadow-item state-shadow-item">
+              <div class="shadow-active" value="">全部</div>
+              <div value="4">在交易</div>
+              <div value="5">已成交</div>
+              <div value="6">未成交</div>
+              <div value="2">交易中止</div>
+              <div value="1">交易终止</div>
+            </div>
+          </div>
+        </div>
+        <!-- 交易方式选择 -->
+        <div class="shadow exchange-shadow">
+          <div class="shadow-core">
+            <div class="shadow-item exchange-shadow-item" id="business">
+              <div class="shadow-active" value="">全部</div>
+              <div value="3">国企挂牌</div>
+              <div value="2">司法拍卖</div>
+              <div value="10">工业楼宇</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dateline">
+        <ul class="dateline-ul jsTab" data-active="dateline-active">
+          <li class="dateline-active" onclick="selecttime('all')">
+            <div id="all">全部</div>
+          </li>
+          <li onclick="selecttime('today')">
+            <div id="today">今日 <span></span></div>
+          </li>
+          <li onclick="selecttime('thisweek')">
+            <div id="thisweek">本周<span></span></div>
+          </li>
+          <li onclick="selecttime('thismonth')">
+            <div id="thismonth">本月<span></span></div>
+          </li>
+        </ul>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <div style="height:calc(100% - 22rem)">
+      <div class="mui-content mui-scroll-wrapper droploader">
+
+
+        <div class="mui-scroll">
+          <!--数据列表-->
+          <ul class=" mui-table-view-chevron nature-card" id="house">
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <!-- 隐藏导航栏 -->
+    <!-- 网站底部 -->
+    <#include "../../cms/public/footerwap.html">
+
+      <script src="${basePath}/webwap/js/jquery.min.js"></script>
+      <script src="${basePath}/webwap/js/mui.min.js"></script>
+      <script src="${basePath}/webwap/js/common.js"></script>
+      <script src="${basePath}/webwap/js/house.js"></script>
+      <script src="${basePath}/tradewebpc/js/pager.js"></script>
+      <script src="${basePath}/tradewebpc/js/list.js"></script>
+      <script src="${basePath}/webwap/js/house-list.js"></script>
+</body>
+
+</html>

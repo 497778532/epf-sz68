@@ -1,0 +1,39 @@
+.tradingGuide{
+    background: #f4f4f4;
+    overflow: hidden;
+}
+.public-titel{
+    background: #fff;
+}
+.result-list {
+    overflow: hidden;
+}
+
+.result-list .result-item {
+    width: 100%;
+    height: 5rem;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    border-bottom: 1px solid #E1E1E1FF;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 1.2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.result-list .result-item a{
+    display: block;
+    color: #323333FF;
+    font-size: 1.4rem;
+}
+.result-publicity{
+    overflow: hidden;
+    float: left;
+}
+.result-leave{
+    float: right;
+}
+.result-leave img{
+    width: .6rem;
+}

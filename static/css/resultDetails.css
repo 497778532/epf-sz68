@@ -1,0 +1,24 @@
+.resultDetails{
+    width: 100%;
+    max-width: 100%;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+.resultDetails-content{
+    color:rgba(51,51,51,1);
+    font-size: 1.6rem;
+    padding: 0 1.2rem;
+    box-sizing: border-box;
+}
+.resultDetails-title{
+    text-align: center;
+    margin: 1.2rem 0;
+}
+.resultDetails-init{
+    line-height: 2.6rem;
+    overflow: hidden;
+    font-size:1.4rem
+}
+.ending{
+    text-align: right;
+}

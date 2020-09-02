@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公告详情</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/noticeDetails.css">
+    <style>
+    div{
+    
+     
+    }
+    .scroll{
+        overflow-x:scroll
+      }
+     .noticeDetails p {
+        margin:0    
+      }
+    .noticeDetails {
+      width:100%;
+   
+    }        
+    </style>	
+</head>
+<body style="margin:0">
+        <!-- 头部 -->
+        <#include "/webwap/common/header.html">
+        
+        
+    <div class="noticeDetails">
+        <div class="content-core" style="min-height:70rem">
+            <div class="notice">
+                <div class="public-titel">
+                    <div class="public-titel-word">公告详情</div>
+                    <#if file??>
+                    <div class="public-titel-download">
+                        <a href="${tradeSystem}/download?module=base&service=BaseDownload&method=downloadFile&lobId=${file.id}">
+                            <img src="${basePath}/webwap/images/icon_download.png" >
+                            <span>点击下载${file.name!}</span>
+                        </a>
+                    </div>
+                    </#if>
+                </div>
+                <div class="notice-content">
+       
+                    <div class="notice-init">
+	                    <#if (notice.noticeType ??) && (notice.noticeType=="1")>
+	                   <#if notice.name??> <div class="notice-init-title">${notice.name!}</div> </#if><div class="notice-init-serial">${notice.no!}</div>
+	                    <#else>
+	                    
+	                    <div class="notice-init-title"><#if notice.name??>${notice.name!}</div> </#if>
+	                   <div class="notice-init-serial"> ${notice.no!}</div>
+                    	</#if>
+                    	
+                    	<div class="notice-init-core">
+						<#if fileExtName??>
+	                      	<#if fileExtName?length &gt; 0>
+	                      		${fileExtName!}
+	                      		<#else>
+	                      			未找到公告详情信息！
+	                      	</#if>
+						<#else>
+						 	<img src="${basePath}/tradewebpc/images/img_default3.png"  />
+	                    </#if>   
+                		</div> 
+                   </div>
+                </div>
+				
+            </div>
+        </div>
+        <!-- 隐藏导航栏 -->
+        <!-- 网站底部 -->
+        <#include "../../cms/public/footerwap.html">
+    </div>
+</body>
+<script src="${basePath}/webwap/js/jquery.min.js"></script>
+<script src="${basePath}/webwap/js/common.js"></script>
+<script>
+$(function(){
+	       var lables = document.querySelectorAll('table')
+	if(lables){
+		       var elem = document.createElement('div')
+	       elem.style.overflowX="scroll"
+	        lables.forEach(function (lable,index) {
+		         lable.style.width="170rem"
+	             lable.parentNode.replaceChild(elem, lable)
+	             elem.appendChild(lable)
+	        });
+	}
+	
+
+	       $('.notice-init div').css({"margin":"0","font-size":"1.4rem","width":"100%"})
+	       $('.notice-init p').css({"font-size":"1.4rem","margin":"0"})
+	       $('.notice-init span').css({"font-size":"1.4rem"})
+	        
+})
+
+</script>
+</html>

@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>忘记密码</title>
+
+  <link rel="stylesheet" href="front/css/tiaimFindUser.css">
+  <link href="./front/images/slreec_logo.png" rel="icon" type="image/x-ico">
+</head>
+
+<body>
+
+  <div class="page-epf login">
+
+    <div class="title-case">
+      <div>
+        <div><a href="##" id="headerLogo"><img src="front/images/logo_wps.png" alt=""></a></div>
+        <!-- 未登录 -->
+
+
+
+      </div>
+      <div>
+        <img class="navigationMore" src="front/images/icon_wps.png" src1="front/images/icon_wps.png"
+          src2="front/images/icon_close.png" alt="">
+      </div>
+    </div>
+    <div class="hideNavigation">
+      <div class="hideNavigation-item">
+        <!-- <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001"> -->
+        <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001">
+          <span>自然资源</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="">
+          <span>房产交易</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/tradingnoticelist">
+          <span>交易公告</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/resultsnoticelist">
+          <span>结果公示</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/schedulelist">
+          <span>看标的日程安排</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <!-- <div class="hideNavigation-item">
+            <a href="${basePath}/web/getTransLiveBroadcast">
+                <span>交易直播</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div> -->
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${guideCode}">
+          <span>交易指南</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${newsCode}">
+          <span>中心动态</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${policyCode}">
+          <span>政策法规</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="http://www.fair1.cn">
+          <span>房博会</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="http://pnr.sz.gov.cn/d-cyyf/">
+          <span>供需平台</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/infodetails?id=3d15b072-a24f-4291-b12e-84b0829c263f&amp;code=0017">
+          <span>关于中心</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/jiaoyizhiyin/wap/tradingGuideList.html">
+          <span>交易指引</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+    </div>
+
+    <!-- 忘记密码 -->
+    <div class="forgetPassword">
+      <form class="form">
+        <div class="login-account form-item">
+          <img src="front/images/icon_message.png" alt="">
+          <input id="txtUserInfo" class="login-input" placeholder="注册信息" name="txtUserInfo"   placeholder-class="input-placeholder" />
+        </div>
+        <div class="login-phone form-item">
+          <img src="front/images/icon_way.png" alt="">
+          <input class="login-input"  disabled placeholder="输入注册信息后自动查询" password='true' name="pwd" id="phone-email"
+            placeholder-class="input-placeholder"></input>
+        </div>
+        <div class="login-verification form-item">
+          <img src="front/images/icon_code.png" alt="">
+          <input class="login-input " placeholder="请输入验证码" name="code" placeholder-class="input-placeholder" id="txtVerifyCode" />
+          
+           <input class="registerVerification dispatch" id="btnSendVerifyCode"  value="发送验证码"  type="button">
+       
+        </div>
+        <div class="login-password form-item">
+          <img src="front/images/icon_password.png" alt="">
+          <input type="password" class="login-input" placeholder="请输入新密码" password='true' name="pwd"
+            placeholder-class="input-placeholder" id="txtPassword"></input>
+        </div>
+        <div class="login-password form-item">
+          <img src="front/images//icon_password.png" alt="">
+          <input type="password" class="login-input" placeholder="请输入新密码" password='true' name="pwd"
+            placeholder-class="input-placeholder" id="txtPasswordConfirm"></input>
+        </div>
+        <div class="login-submit">
+          <div  onclick="mysubmit()">登录</div>
+        </div>
+      </form>
+    </div>
+
+    <!-- 隐藏导航栏 -->
+
+
+  </div>
+  <script type="text/javascript" src="front/js/include.js"></script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.md5.js"></script>
+  <script type="text/javascript" src="js/ligerui.all.js"></script>
+  <script type="text/javascript" src="js/base.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+    <script src="front/js/mui.min.js"></script>
+  <script type="text/javascript" src="js/debug.js"></script>
+  <script type="text/javascript" src="js/ca.js"></script>
+  <script type="text/javascript" src="login.js"></script>
+  <script type="text/javascript" src="tiaimFindUserWap.js"></script>
+  
+    <script>
+    
+    tiaimApproot=tiaimApproot+'/wap'
+    var commonObj = {};
+    // 导航点击展开
+    commonObj.navigationMore = function () {
+      var toggle = true;
+
+      $(".navigationMore").click(function () {
+        var thisImg = $(this).attr("src1");
+        var changImg = $(this).attr("src2");
+        $(".hideNavigation").toggle();
+        $(".content-core").toggle();
+        if (toggle) {
+          $(this).attr("src", changImg)
+          toggle = false;
+        } else {
+          $(this).attr("src", thisImg);
+          toggle = true;
+        }
+      })
+    }
+
+    // 切换页面和样式
+    commonObj.cut = function () {
+      $(".jsTab").on("click", "li", function () {
+        var index = $(this).index();
+        var active = $(this).parents(".jsTab").data("active");
+        var model = $(this).parents(".jsTab").data("model");
+        $(this).addClass(active).siblings("li").removeClass(active);
+        $(model).eq(index).show().siblings("div").hide();
+      })
+    }
+    $(document).ready(function () {
+        commonObj.navigationMore()
+        commonObj.cut();
+      $(".header img").each(function () {
+        var src = $(this).attr("src");
+        if (!comObj.isEmpty(src)) {
+          $(this).attr("src", approot + '/' + src);
+        }
+      })
+
+      $(".transaction-item-close").click(function () {
+        $(this).parents(".transaction-item").remove()
+      })
+      $("#headerLogo").attr('href', tiaimApproot + '/index');
+      var userInfo = getUserInfoObj();
+
+      let logout=function (){
+    	  
+     	 var cmd = new Command();
+          cmd.module = "sysman";
+          cmd.service = "User";
+          cmd.method = "clearUserSessionData";
+          cmd.success = function(data) {
+         
+           window.$userInfo = null;
+           if(data.ifUserSSO == "1")
+           {
+            location.href = tiaimApproot+'/index';
+           }
+           else
+           {
+            /* var protocol = window.location.protocol + "//";
+            var host = window.location.host;
+            location.href = protocol + host + approot + "/login.html"; */
+         	    location.href = tiaimApproot+'/index';
+           }
+          }
+          cmd.execute();
+     }
+      $(".hideNavigation-item:eq(0)").find(' a').attr('href', tiaimApproot + '/getLandTarget?code=0015-0001&amp;childCode=0015-0001');
+      $(".hideNavigation-item:eq(1)").find(' a').attr('href', tiaimApproot + '/getHouseTarget?code=0015-0002&amp;childCode=0015-0002');
+      $(".hideNavigation-item:eq(2)").find(' a').attr('href', tiaimApproot + '/tradingnoticelist');
+      $(".hideNavigation-item:eq(3)").find(' a').attr('href', tiaimApproot + '/resultsnoticelist');
+      $(".hideNavigation-item:eq(4)").find(' a').attr('href', tiaimApproot + '/schedulelist');
+
+      $(".hideNavigation>hideNavigation-item:eq(5)").find('a').attr('href', tiaimApproot + '/publishinfoslist?code=0020');
+      $(".hideNavigation>hideNavigation-item:eq(6)").find('a').attr('href', tiaimApproot + '/publishinfoslist?code=0017');
+      $(".hideNavigation>hideNavigation-item:eq(7)").find('a').attr('href', tiaimApproot + '/publishinfoslist?code=0029');
+      $(".hideNavigation>hideNavigation-item:eq(8)").find('a').attr('href', 'http://www.fair1.cn/main/fair1/current/index.html');
+      $(".hideNavigation>hideNavigation-item:eq(9)").find('a').attr('href', 'http://pnr.sz.gov.cn/d-cyyf/');
+      $(".hideNavigation>hideNavigation-item:eq(10)").find('a').attr('href', tiaimApproot + '/infodetails?id=3d15b072-a24f-4291-b12e-84b0829c263f&code=0017');
+      $(".hideNavigation>hideNavigation-item:eq(11)").find('a').attr('href', tiaimApproot + '/web/getTransTrackTarget?code=0033');
+
+
+    });
+
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页 </title>
+  <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/index.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/swiper.min.css">
+
+  <#assign tradCode="0015" /><!-- 交易信息 -->
+  <#assign newsCode="0017" /><!-- 中心动态 -->
+  <#assign coreCode="0017-0001" /><!-- 中心动态 -->
+  <#assign policyCode="0029" /><!-- 政策法规 -->
+  <#assign guideCode="0020" /><!-- 交易指南 -->
+  <#assign noticeCode="0026" /><!-- 交易公告 -->
+  <#assign unCode="0000" /><!-- 不选中 -->
+</head>
+
+<body>
+  <div class="page-epf home">
+    <!-- 头部 -->
+    <#include "../webwap/common/header.html">
+
+
+      <div class="content-core">
+        <!-- 交易直播 -->
+        <!-- <div class="streaming">
+                    <div class="streaming-left">
+                        <img src="${basePath}/webwap/images/icon_live.png" alt="">
+                        <span>交易直播：</span>
+                    </div>
+                    <div class="notification_core swiper-container1" vertical="true">
+                        <div class="swiper-wrapper">
+                   <#if resultList?size &gt; 0>
+                        <#list resultList as reList>
+                                 <div class="swiper-slide">
+                                     <a href="${basePath}/wap/getTransLiveBroadcast">${reList.targetName!}</a>
+                                 </div>
+                         </#list>
+                    <#else>
+                             <div class="swiper-slide">
+                                 <a href="${basePath}/wap/getTransLiveBroadcast">暂无公告</a>
+                             </div>
+                     </#if>    
+                        </div>
+                    </div>
+                </div> -->
+        <!-- 轮播图 -->
+        <div class="swiper-container swiper-banner">
+          <div class="swiper-wrapper">
+            <#list banners as banner>
+              <div class="swiper-slide">
+                <#if banner.bannerType??&&banner.bannerType=="1">
+                  <a href="${banner.wapUrl!}">
+                    <img src="${basePath}/document/downloadById?id=${banner.img!}" />
+                    <#if banner.name??>
+                      <div class="img_introduce">
+                        <p>${banner.name!}</p>
+
+                      </div>
+                    </#if>
+                  </a>
+                  <#else>
+                    <a href="${banner.wapUrl!}">
+                      <img src="${basePath}/document/downloadById?id=${banner.img!}" />
+                      <#if banner.name??&&banner.remark??>
+                        <div class="img_introduce">
+                          <p>宗地号：${banner.name!}</p>
+                          <p></p>
+                          <p>
+                            ${banner.remark!}
+                          </p>
+                        </div>
+                      </#if>
+                    </a>
+                </#if>
+              </div>
+            </#list>
+          </div>	
+        </div>
+          <div class="swiper-no-swiping expo swiper-container swiperadver" >
+            <div class="swiper-wrapper">
+              <#if adverts??>
+                <#list adverts as adv>
+
+                  <div class="firstly swiper-slide">
+                    <a href="${adv.wapUrl!}" style="width:100%;height:3.1rem;display:block">
+                      <div class="kernel" style="width:100%;height:3.1rem;display:block">
+                        <img style="display:block;height:3.1rem;vertical-align:middle" src="${basePath}/document/downloadById?id=${adv.img!}" alt="">
+                      </div>
+                    </a>
+                  </div>
+
+
+                </#list>
+              </#if>
+            </div>
+            <div class="" swiper-container swiperadver"-pagination"></div>
+        
+        </div>
+        <!-- 公告切换 -->
+        <div class="annunciate">
+          <div class="annunciate-title">
+            <ul class="annunciate-ul jsTab " data-active="annunciate-active" data-model=".annunciate-conten>div">
+              <li class="annunciate-active">
+                <div>最新公告</div>
+              </li>
+              <li>
+                <div>结果公示</div>
+              </li>
+              <li>
+                <div>看标的日程</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="annunciate-conten">
+            <!-- 最新公告 -->
+            <div class="newest">
+              <div class="newestMore"><a href="${basePath}/wap/tradingnoticelist">查看更多>></a></div>
+              <div class="newest-list">
+                <#list noticelist as notice>
+                  <div class="newest-item">
+                    <#if notice.BUSINESS_TYPE?? && (notice.BUSINESS_TYPE==2 || notice.BUSINESS_TYPE==3 || notice.BUSINESS_TYPE==8)>
+                      <div class="newest-btnMore">
+                      
+                        <a href="${basePath}/wap/housenoticedetail?id=${notice['ID']!''}">
+                          <#if notice.TYPE=="1">
+                            补充公告
+                            <#elseif notice.TYPE=="2">
+                              紧急公告
+                              <#else>
+                                交易公告
+                          </#if>
+                        </a>
+                      </div>
+
+                      <div class="newest-details">
+                      
+                        <div>
+                          <a style="display:block;font-size:1.5rem" href="${basePath}/wap/housenoticedetail?id=${notice['ID']!''}"
+                          >
+                          
+                            <#if notice["NAME"]? length gt 1>
+                             ${notice["NAME"]!}
+                            </#if>
+                          </a>
+                           <div style="color: #999999;text-align: right;font-size:1.5rem">${notice["NOTICE_DATE"]!}</div> 
+                        </div>
+                        <div class="newest-serial">
+                          <span> </span>
+                        </div>
+                      </div>
+                      <#else>
+                        <div class="newest-btnMore">
+                          <a href="${basePath}/wap/tradingnoticedetail?id=${notice['ID']!''}">
+                            <#if notice.TYPE=="1">
+                              补充公告
+                              <#elseif notice.TYPE=="2">
+                                紧急公告
+                                <#else>
+                                  交易公告
+                            </#if>
+                          </a>
+                        </div>
+                        <div class="newest-details">
+                          <div>
+                            <a href="${basePath}/wap/tradingnoticedetail?id=${notice['ID']!''}"
+                           >
+                              <#if notice["NO"]? length gt 1>
+                                    ${notice["NO"]!}
+                              </#if>
+                            </a>
+                          </div>
+                          <div class="newest-serial" style="display:flex">
+                             	<span style="flex:2;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;margin-right:1rem"> 
+                            <#if notice.TRADINGS?size &gt; 0>
+                             
+                              <#list notice.TRADINGS as tnos>
+                                <#if tnos_index==0||tnos_index==1>
+                                  <#if tnos.BUSINESS_TYPE=0>
+                                    <a 
+                                  
+                                    href="${basePath}/wap/landDetail?id=${tnos['ID']!''}&code=0015&goodId=${tnos['GOODSID']!''}"  
+                                   >${tnos["NO"]}</a>
+                                    <#else>
+                                    <a
+                 
+                                    href="${basePath}/wap/commonDetail?id=${tnos['ID']!''}&code=0015&goodId=${tnos['GOODSID']!''}"
+                                    >${tnos["NO"]}
+                                    </a>
+                                  </#if>
+                                 <#else>
+                                    <span></span>
+                                 </#if>
+                                
+                              </#list>
+                            </#if>
+                            </span>
+                          	<span style="flex:1; color: #999999;text-align:right">${notice["NOTICE_DATE"]!}</span> 
+                          </div>
+                        </div>
+                         
+                    </#if>
+                  </div>
+                </#list>
+              </div>
+            </div>
+
+            <!-- 结果公示 -->
+            <div class="newest">
+              <div class="newestMore"><a href="${basePath}/wap/resultsnoticelist">查看更多>></a></div>
+              <div class="newest-list">
+                <#list resultnoticeList as notice>
+                  <div class="newest-item">
+                    <div class="newest-btnMore">
+                      <a 
+                        href="${basePath}/wap/resultsnoticedetail?id=${notice['ID']!''}&targetId=${notice['TARGET_ID']!}">结果公示</a>
+                    </div>
+                    <div class="newest-details">
+                      <div>
+                        <a
+                          href="${basePath}/wap/resultsnoticedetail?id=${notice['ID']!''}&targetId=${notice['TARGET_ID']!}" style="display:block">
+                          <#if notice["NAME"]? length gt 1>
+                             ${notice["NAME"]!}
+                          </#if>
+                           <div class="result-date">    
+                            <#if (notice["PUBLISH_TIME"])??>
+                           	${notice["PUBLISH_TIME"]?string('yyyy-MM-dd')}  
+                           	</#if>
+                          </div>	
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </#list>
+              </div>
+            </div>
+
+            <!-- 看标的日程 -->
+            <div class="newest">
+              <div class="newestMore"><a href="${basePath}/wap/schedulelist">查看更多>></a></div>
+              <div class="newest-list">
+                <#list targetCalendarlist as targetlist>
+                  <#if targetlist_index &lt; 5>
+                    <div class="newest-item">
+                      <div class="newest-btnMore newest-btnMore2">
+                        <a href="#">
+                          <div>${(targetlist.seeFloorTime?string('yyyy-MM-dd'))!}</div>
+                          <div>${(targetlist.seeFloorTime?string('HH:mm'))!}</div>
+                        </a>
+                      </div>
+                      <div class="newest-details newest-details2">
+                        <div>
+                          <span>${targetlist.area !}</span>
+                          <span>${targetlist.address !}</span>
+                        </div>
+                        <div class="newest-particulars">
+                          <span>${targetlist.targetName !}</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </#if>
+                </#list>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 自然资源交易 -->
+        <div class="nature">
+          <div class="public-titel">
+            <div class="public-titel-word">自然资源交易</div>
+            <div class="public-titel-more"><a
+                href="${basePath}/wap/getLandTarget?type=0,1,4,5,6,7,9,11,99&code=0015-0001&sel=001501">查看更多>></a>
+            </div>
+          </div>
+          <div class="nature-content">
+            <ul class="nature-handover jsTab land-tab" data-active="handover-acrive">
+              <li class="handover-acrive ">全部</li>
+              <li>土地</li>
+              <li>矿业权</li>
+              <li>海域</li>
+              <li>租赁工地</li>
+            </ul>
+            <div class="nature-card" id="tradingland">
+
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 房产交易 -->
+        <div class="nature">
+          <div class="public-titel">
+            <div class="public-titel-word">房产交易</div>
+            <div class="public-titel-more"><a
+                href="${basePath}/wap/getHouseTarget?type=2,3,8,10&code=0015-0002&sel=001501">查看更多</a>>>
+            </div>
+          </div>
+          <div class="nature-content">
+            <ul class="nature-handover jsTab house-tab" data-active="handover-acrive">
+              <li class="handover-acrive">全部</li>
+              <li value="gq">国企挂牌</li>
+              <li value="sf">司法拍卖</li>
+              <li value='gy'>工业楼宇</li>
+            </ul>
+            <div class="nature-card" id="house">
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 创新型产业用房 -->
+        <div class="innovate">
+          <div class="public-titel">
+            <div class="public-titel-word">创新型产业用房</div>
+            <div class="public-titel-more">查看更多>></div>
+          </div>
+          <div class="nature-content">
+            <ul class="nature-handover jsTab make-tab" data-active="handover-acrive">
+              <li class="handover-acrive">热门房源</li>
+              <li>最新发布</li>
+              <li>现可申请</li>
+              <li>720°看房</li>
+            </ul>
+            <div class="nature-card nature-card2" id="new">
+            
+
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 交易信息公开 -->
+        <div class="tradeInformation">
+          <div class="public-titel">
+            <div class="public-titel-word">交易信息公开</div>
+          </div>
+          <div id="content" class="tradeInformation-contect">
+            <div class="contect-bg">
+              <div class="contect-title">
+                <div>
+                  <span id="calendar_nian" style="font-size:1.6rem"></span>
+                  <span id="calendar_yue" style="font-size:2rem;margin-left:.6rem">7</span>
+                </div>
+                <div>
+                  <img alt="上一月" src="${basePath}/webwap/images/left.png" id="prev_month">
+                  <img alt="下一月" src="${basePath}/webwap/images/right.png" id="next_month">
+                </div>
+              </div>
+              <table id="calendar" cellspacing="0" cellpadding="0" class="calendar">
+                <thead>
+                  <th>一</th>
+                  <th>二</th>
+                  <th>三</th>
+                  <th>四</th>
+                  <th>五</th>
+                  <th>六</th>
+                  <th>日</th>
+                </thead>
+                <tbody id="calendar_content_date">
+                </tbody>
+              </table>
+            </div>
+            <div class="contect-init">
+              <div>
+                <img src="${basePath}/webwap/images/red_wps.png" alt="">
+                <span>房产交易</span>
+              </div>
+              <div>
+                <img src="${basePath}/webwap/images/blue_wps.png" alt="">
+                <span>自然资源交易</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="dynamic">
+          <div class="dynamic-title">
+            <ul class="dynamic-ul jsTab" data-active="dynamic-active" data-model=".dynamic-content>div">
+              <li class="dynamic-active">
+                <div>中心动态</div>
+              </li>
+              <li>
+                <div>交易指南</div>
+              </li>
+              <li>
+                <div>政策法规</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="dynamic-content">
+            <!-- 中心动态 -->
+            <div class="centre">
+              <div class="newestMore"><a href="${basePath}/wap/publishinfoslist?code=${newsCode}">查看更多>></a></div>
+              <#if infos ??>
+                <#list infos as info>
+                  <#if info_index==0>
+                    <div class="centre-banner">
+                      <!-- <a href="${basePath}/webpc/infodetails?id=${info.id}&code=${newsCode}">
+                        	这需要点击跳转
+                         </a> -->
+                      <img src="${basePath}/document/downloadById?id=${info.thumbnail!}"
+                        onerror="this.src='${basePath}/tradewebpc/images/img_dt.jpg'" alt="">
+                      <div class="centre_serial">
+                        <div class="centre_serial_data">
+                          <div>${(info.pubTime?string('dd'))!}</div>
+                          <div>${(info.pubTime?string('MM'))!}月</div>
+                        </div>
+                        <div class="centre_serial_parcel">
+                          <span>
+                            <#if info.title? length gt 20>${info.title?substring(0,20)}...
+                              <#else>${info.title!}</#if>
+                          </span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </#if>
+                </#list>
+                <#else>
+                  <div class="centre-banner">
+                    <img src="${basePath}/webwap/images/img_dt_wps.jpg" alt="">
+                    <div class="centre_serial"> </div>
+                  </div>
+              </#if>
+              <div class="centre-list">
+                <#if infos ??>
+                  <#list infos as info>
+                    <#if info_index !=0>
+                      <div class="centre-item">
+                        <a href="${basePath}/wap/infodetails?id=${info.id}&code=${newsCode}">
+                          <div>
+                            <#if info.title? length gt 20>${info.title?substring(0,20)}...
+                              <#else>${info.title!}</#if>
+                          </div>
+                        </a>
+                        <div>${(info.pubTime?string('yyyy-MM-dd'))!}</div>
+                      </div>
+                    </#if>
+                  </#list>
+                </#if>
+              </div>
+            </div>
+
+            <!-- 交易指南 -->
+            <div class="fingerpost">
+              <div class="newestMore"><a href="${basePath}/wap/publishinfoslist?code=${guideCode}">查看更多>></a></div>
+              <div class="fingerpost-banner">
+                <img src="${basePath}/webwap/images/img_zn_wps.jpg" alt="">
+              </div>
+              <div class="centre-list">
+                <#if trans??>
+                  <#list trans as info>
+                    <div class="centre-item">
+                      <a href="${basePath}/wap/infodetails?id=${info.id}&code=${guideCode}">
+                        <div>${info.title!}</div>
+                      </a>
+                      <div>${(info.pubTime?string('yyyy-MM-dd'))!}</div>
+                    </div>
+                  </#list>
+                </#if>
+              </div>
+            </div>
+
+            <!-- 政策法规 -->
+            <div class="fingerpost">
+              <div class="newestMore"><a href="${basePath}/wap/publishinfoslist?code=${policyCode}">查看更多>></a></div>
+              <div class="fingerpost-banner">
+                <img src="${basePath}/webwap/images/img_fg_wps.jpg" alt="">
+              </div>
+              <div class="centre-list">
+                <#if policy??>
+                  <#list policy as info>
+                    <div class="centre-item">
+                      <a href="${basePath}/wap/infodetails?id=${info.id}&code=${policyCode}">
+                        <div>${info.title!}</div>
+                      </a>
+                      <div>${(info.pubTime?string('yyyy-MM-dd'))!}</div>
+                    </div>
+                  </#list>
+                </#if>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+        <!-- 网站底部 -->
+        <#include "../cms/public/footerwap.html">
+      </div>
+
+      <!-- 隐藏导航栏 -->
+
+  </div>
+  <script type="text/javascript">
+    var basePath = "${basePath}";
+    var supplyUrl = "${supplyurl}";
+    var curDate = "${curDate!}";
+  </script>
+  <script src="${basePath}/webwap/js/jquery.min.js"></script>
+
+  <script src="${basePath}/webwap/js/swiper.min.js"></script>
+  <script src="${basePath}/webwap/js/common.js"></script>
+  <script src="${basePath}/webwap/js/show_calendar.js"></script>
+  <script src="${basePath}/webwap/js/index.js"></script>
+  <script src="${basePath}/webwap/js/record.js"></script>
+  <script>
+    var mySwiper = new Swiper('.swiper-container', {
+      autoplay: true,
+    })
+
+    var swiper = new Swiper('.swiperadver', {
+      autoplay: true,
+      direction: 'vertical',
+      slidesPerView: 'auto',
+      freeMode: true,
+      freeModeMomentumRatio: 0.2
+    });
+    
+
+  </script>
+</body>
+
+</html>

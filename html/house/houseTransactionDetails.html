@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>房产详情</title>
+     <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/houseDetails.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/swiper.min.css">
+</head>
+<body  onload="highestPri()">
+    <div class="page-epf houseDetails">
+        <!-- 头部 -->
+<#include "/webwap/common/header.html">
+        <div class="content-core">
+            <!-- 标的详情 -->
+            <div class="subject">
+                <div class="public-titel">
+                    <div class="public-titel-word">房产详情</div>
+                </div>
+                <div class="subject-content">
+                    <div class="subject-title">
+                        <span>${target.name!}</span>
+                    </div>
+                    <div class="subject-data">
+                        <span>发布日期：</span>
+                        <span>${(target.beginNoticeTime?string('yyyy-MM-dd'))!}</span>
+                        <#if target.isStop==1> <span class="thedeal">已终止</span> <#elseif
+							target.isSuspend==1> <span class="thedeal">已中止</span> <#elseif
+							target.status==5> <span class="thedeal trade">${target.targetStatus!}</span>
+						<#else> <span class="thedeal">${target.targetStatus!}</span></#if>
+                    </div>
+                    <div class="subject-img">
+                                  		<div class="swiper-container my-banner" style="width: 100%;height: 300px;margin-left: auto;margin-right: auto;">
+							<div class="swiper-wrapper">
+								<#if landImgs?? &&(landImgs?size>0)>
+								<#list landImgs as landImgOne>
+								<div class="swiper-slide land-image" style="">
+					<img data-index="${landImgOne_index}" src="${basePath}/web/showing?id=${landImgOne.id !}" />
+					
+								</div>
+							</#list>
+							<#else>
+							<div class="swiper-slide land-image" data="0" style="background-size: cover;background-position: center;">
+								   <img src="${basePath}/webwap/images/zw_tp.jpg" alt="">
+								</div>
+					
+							</#if>
+						</div>
+					</div>
+                    </div>
+                    <div class="subject-list">
+                        <div class="subject-item">
+                            <span>来源：</span>
+                            <span>${houseInfoList.goodsType !}</span>
+                            
+                        </div>
+                        <div class="subject-item">
+                            <span>交易类型：</span>
+                            <span>${target.batchTypename!}</span>
+                        </div>
+<#if target.isStop!=1 && target.isSuspend!=1 && target.status==5>
+             				 <#if timer.isShowGuaPai=='1'>
+								<div class="subject-item">
+								<span>竞得人：</span>
+						         <span>
+									<#if detail["WINNER"]??>
+									<!-- 大于60个字的只展示60个字 -->
+									<#if detail["WINNER"]?length gt 80>
+										${detail["WINNER"]?substring(0,80)}...
+									<#else>
+										${detail["WINNER"]!'&nbsp;'}
+									</#if>
+								</span>
+								</div>
+							<#else>
+							</#if>
+							</div>
+							<#elseif timer.transType=='1'>
+							<div class="subject-item">
+								<span>竞得人：</span>
+						         <span>
+								<#if detail["WINNER"]??>
+									<!-- 大于60个字的只展示60个字 -->
+									<#if detail["WINNER"]?length gt 80>
+										${detail["WINNER"]?substring(0,80)}...
+									<#else>
+										${detail["WINNER"]!'&nbsp;'}
+									</#if>
+								<#else>
+								</#if>
+							</span>
+								</div>
+						<#else>
+								<div class="subject-item">
+								<span>中标人：</span>
+						         <span>
+									<#if detail["WINNER"]??>
+								<!-- 大于60个字的只展示60个字 -->
+								<#if detail["WINNER"]?length gt 80>
+								${detail["WINNER"]?substring(0,80)}...
+								<#else>
+								${detail["WINNER"]!'&nbsp;'}
+								</#if>
+								<#else>
+								</#if>
+								</span>
+								</div>
+						</#if>
+              
+              <div class="subject-item">
+                            <span>成交价（元）：</span>
+                            <span>
+							<#if target.transPrice?? && target.transPrice !=0>
+								${(target.transPrice?string(',###.##'))!'&nbsp;'}
+								<#else>
+						         	/
+						        </#if>
+							</span>	
+<#elseif target.isStop!=1 && target.isSuspend!=1 && (target.status==3 || target.status==4)>
+              <div class="subject-item" style="display:flex">
+                            <span id="timename">距${params.phase_name!}结束：</span>
+                            <span class="countd">
+								 <ul style="display:flex">
+									<li id="d" class="time">00</li>
+									<li class="info">天</li>
+									<li id="h" class="time">00</li>
+									<li class="info">时</li>
+									<li id="i" class="time">00</li>
+									<li class="info">分</li>
+									<li id="s" class="time">00</li>
+									<li class="info">秒</li>
+								</ul>
+                          </span>
+                        </div>
+                     
+                      <#if target.transTyp??&&(target.transType==0||target.transType==1||target.transType==3||target.transType==4)>
+                       <div class="subject-item">
+                            <span id="newprice">当前报价 (元)：</span>
+                            <span class="moles">
+										<#if params.max_price2?? >
+										<#if params.max_price2?? >
+											${((params.max_price2?number)?string(',###.##'))!'&nbsp;'}
+										</#if>
+										<#if params.max_price??>
+											${((params.max_price?number)?string(',###.##'))!'&nbsp;'}
+										</#if>
+									<#else>
+										<#if params.max_price?? >
+											${((params.max_price?number)?string(',###.##'))!'&nbsp;'}
+										<#else>
+											&nbsp; 
+										</#if>
+									</#if>
+                          </span>
+                        </div>
+					  </#if> 
+<#else>
+              
+               <div class="subject-item">
+                            <span>交易状态：</span>
+                            <span><#if target.isStop==1> 已终止 <#elseif target.isSuspend==1>
+						已中止 <#else> ${target.targetStatus!} </#if></span>
+				</div>
+</#if>
+								
+											              
+                        <div class="subject-item">
+                            <span>起始价（元）：</span>
+                            <span><#if target.transType!=2&& target.transType!=9>
+                            			<#if detail.BEGIN_PRICE?? && detail.BEGIN_PRICE !=0>
+										${(detail["BEGIN_PRICE"]?string(',###.##'))!}</#if>
+								<#else>
+										<#if detail.BEGIN_PRICE?? && detail.BEGIN_PRICE !=0>
+										${(detail["BEGIN_PRICE"]?string(',###.##'))!}</#if>
+                            	</#if>
+                            	
+                          </span>
+                        </div>
+                        <div class="subject-item">
+                            <span>保证金（元）：</span>
+                            <span><#if target.earnestMoney?? && target.earnestMoney !=0>
+										${(target.earnestMoney?string(',###.##'))!'&nbsp;'}</#if></span>
+                        </div>
+                        <div class="subject-item">
+                            <span>竞价阶梯 (元)：</span>
+                            <span class="moles2">
+                            	<#if detail.PRICE_STEP?? && detail.PRICE_STEP !=0>
+									${(detail["PRICE_STEP"]?string(',###.##'))!}
+									<#else>
+						         	/
+						        </#if></span>
+                        </div>
+                        <div class="subject-item">
+                            <span>最高报价 (元)：</span>
+                            <span class="moles2" id="highestPrice">
+                            	<#if target.highestPrice?? && target.highestPrice!="0">${((target.highestPrice?number)?string(',###.00'))!'&nbsp;'}</#if>
+							</span>
+                        </div>
+                        <div class="subject-item">
+                            <span>竞买申请截止时间：</span>
+                            <span><#if params.end_apply_time??>
+								${params.end_apply_time!}
+								<#else>
+					         	/
+					        </#if>
+					        </span>
+                        </div>
+                        <div class="subject-item">
+                            <span id="bidderNumber">竞买人数：</span>
+                            <span class="moles2">
+                            <#if params.license_count??>
+								<#if params.license_count == -1>
+						        -
+								<#elseif params.license_count==0>
+									<#if target.batchType?? && target.batchType=="1" && target.status?? && target.status==5 
+									&& params.isOldData?? && params.isOldData=="1">
+									  	多人竞买
+									<#else>
+									 	 无人竞买
+									</#if>
+						        	
+								<#elseif params.license_count==1>
+									<#if target.batchType?? && target.batchType=="0" && target.status?? && target.status==5 
+									&& params.isOldData?? && params.isOldData=="1">
+									  	多人竞买
+									<#else>
+									 	 一人竞买
+									</#if>
+								<#elseif params.license_count==2>
+									多人竞买
+								</#if>
+								
+							</#if>
+					        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 相关附件下载 -->
+            <div class="accessory">
+                <div class="accessory-title">
+                    <img src="/tiaim/webwap/images/icon_download.png" alt="">
+                    <span>相关附件下载</span>
+                </div>
+                
+                <div class="accessory-download">
+                
+               	 <#if files??>
+                  <#list files as file>
+   					<a onclick="viewUrlPdf('${tradeSystem}/download?module=base&service=BaseDownload&method=downloadFile&lobId=${file.id}','${file.dtlfileName!}','${file.fileName!}');">
+   						<img  src="${basePath}/tradewebpc/images/doc.png">${file.dtlfileName!}
+   					</a>
+                  </#list>
+               </#if>
+                   <a  onclick="viewUrlPdf('${basePath}/web/downloadByUrl?url=/docx/cjqrs.pdf','cjqrs.pdf','cjqrs.pdf','isLocal')" >
+  					<img  src="${basePath}/tradewebpc/images/doc.png">成交确认书
+  					</a>
+  					<a onclick="viewUrlPdf('${basePath}/web/downloadByUrl?url=/docx/jmsqs.pdf','jmsqs.pdf','jmsqs.pdf','isLocal')">
+  					<img  src="${basePath}/tradewebpc/images/doc.png">竞买申请书
+  					</a>
+  					<a onclick="viewUrlPdf('${basePath}/web/downloadByUrl?url=/docx/xcjjgz.pdf','xcjjgz.pdf','xcjjgz.pdf','isLocal')" >
+  					<img  src="${basePath}/tradewebpc/images/doc.png">现场竞价规则
+  					</a>
+  					<a onclick="viewUrlPdf('${basePath}/web/downloadByUrl?url=/docx/wljjgz.pdf','wljjgz.pdf','wljjgz.pdf','isLocal')" >
+  					<img  src="${basePath}/tradewebpc/images/doc.png">网络竞价规则
+  					</a>
+                </div>
+            </div>
+
+            <!-- 公告详情 -->
+            <div class="notice">
+                <div class="public-titel">
+                    <div class="public-titel-word">公告详情</div>
+                </div>
+                
+                <#if houseNotice?? && (houseNotice?size  &gt; 0)> 
+                <#list houseNotice as transitem>
+                <div class="notice-content">
+                    <div class="notice-init">
+                        <div class="notice-init-title">${notice.name!}</div>
+                        <div class="notice-init-serial">
+                            <span>发布日期：</span>
+                            <span><#if notice.noticeDate??>${notice.noticeDate?string('yyyy-MM-dd')}</#if></span>
+                        </div>
+                        <div class="notice-init-core">
+			                            根据有关法律、法规及《深圳市土地交易市场管理规定》， 
+			                            受法院及有关单位委托，深圳市土地房产交易中心将公开拍卖下
+			                            列房屋和土地使用权， 凡有意者请登录到交易中心网站
+			                            www.sz68.com办理竞买申请手续。(详细情况请查询交易中心网
+			                            站www.sz68.com或致电或到中心竞买咨询台咨询及索取相关资
+                            		料)。 以下清单中的数据、信息以拍卖当天公布的顺序清单为准。
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="groundSituation">
+                        <div class="groundSituation-title">
+                           <#if notice.noticeDate??> ${notice.noticeDate?string('yyyy')}</#if>第（<span>${transitem.yearNo!}</span>）场房产<#if transitem.batchType==0>
+				                                    		拍卖交易
+				                                    		<#elseif transitem.batchType==1>
+				                                    		挂牌交易
+				                                    		<#elseif transitem.batchType==6>
+				                                    		网络竞价交易
+				                                    	</#if>（总第<span>${transitem.no!}</span>场）
+                        </div>
+                        <div class="groundSituation-info">
+                            <div>
+                                <span class="groundSituation-left">拍卖时间：</span>
+                                <span class="groundSituation-right">${transitem.beginLimitTime?string('yyyy-MM-dd HH:mm')}</span>
+                            </div>
+                            <div>
+                                <span class="groundSituation-left">拍卖方式：</span>
+                                <span class="groundSituation-right">
+                                	<#if transitem.batchType==0>
+                                    	现场拍卖
+                                    	<#elseif transitem.batchType==1>
+                                    	现场挂牌
+                                    	<#elseif transitem.batchType==6>
+                                    	网络竞价
+                                    </#if>
+				               </span>
+                            </div>
+                            <div>
+                                <span class="groundSituation-left">竞买申请时间：</span>
+                                <span class="groundSituation-right"><#if transitem.beginEarnestTime?? > ${transitem.beginEarnestTime?string('yyyy-MM-dd HH:mm')}</#if></span>
+                            </div>
+                        </div>
+                        
+                        <#if transitem.targetlist?? && transitem.targetlist?size  &gt; 0>
+				            <#list transitem.targetlist as house>
+                        <div class="shell">
+                            <div class="shell-title">
+                                <div><a style="color:#008CD6" href="${basePath}/wap/houseDetail?id=${house.ID!}&code=0015&goodId=${house.GOODID!}">${house_index+1!}.${house.NAME!}</a></div>
+                                <div onclick="gethouseremark('${house.LOB_REMARK!}')" >查看备注</div>
+                            </div>
+                            <div class="shell-content">
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">起始价（元）：</span>
+                                        <span class="shell-right">${(house.BEGIN_PRICE?string(',###.##'))!}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">保证金（元）：</span>
+                                        <span class="shell-right">${(house.EARNEST_MONEY?string(',###.##'))!}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">标的面积（㎡）：</span>
+                                        <span class="shell-right">${house.AREA_SIZE!}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">用途：</span>
+                                        <span class="shell-right2">${house.GOODS_USE!}</span>
+                                    </div>
+                                    <div>
+                                        <span class="shell-left">区域：</span>
+                                        <span class="shell-right2">${house.AREA!}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">位置：</span>
+                                        <span class="shell-right2">${house.ADDRESS!}</span>
+                                    </div>
+                                    <div>
+                                        <span class="shell-left">权力人性质：</span>
+                                        <span class="shell-right2">${house.OWNER_TYPE!}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">权属证明：</span>
+                                        <span class="shell-right2">${house.OWNERSHIP_TYPE!}</span>
+                                    </div>
+                                    <div>
+                                        <span class="shell-left">标的性质：</span>
+                                        <span class="shell-right2">${house.KIND!}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">是否欠地价：</span>
+                                        <span class="shell-right2">${house.LACK_LAND_PRICE!}</span>
+                                    </div>
+                                    <div>
+                                        <span class="shell-left">是否有租约：</span>
+                                        <span class="shell-right2">${house.HAS_LEASE!}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">欠土地使用费：</span>
+                                        <span class="shell-right2">${house.LACK_LAND_COST!}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">委托人的相关说明及瑕疵证明：</span>
+                                        <span class="shell-right2">${house.TRADE_REMARK !}</span>
+                                    </div>
+                                </div>
+                                <div class="shell-item">
+                                    <div>
+                                        <span class="shell-left">水电、煤气、管理费等相关未受法律保护债务的处理：</span>
+                                        <span class="shell-right2">${house.UNFINISHED_COST !}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </#list>
+                       </#if>
+                        
+                        
+                        
+                        </div> 
+                    </div>
+                  </#list>
+                 </#if>  
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="warm">
+                        <div class="warm-title">网上交易温馨提示：</div>
+                        <div class="warm-content">
+                            <div>
+                                ①上网实名注册，申请人进入市土地房产交易中心唯一网址：http://www.sz68.com，
+                                点击网上交易，按要求进行实名注册并上传身
+                            </div>
+                            <div>
+                                ②注册成功后，登录交易系统。查标的，选标的，选银行，生成订单，
+                                按订单生成的对应账号，缴纳保证金；
+                            </div>
+                            <div>
+                                ③本中心采用纯网络的交易方式，请竞买人在公告规定的交易时间进入
+                                交易系统自行进行网络竞价交易；
+                            </div>
+                            <div>
+                                ④交易费用：每个交易标的物，成交价100万元以下部分,按百分之一计
+                                收服务费；成交价100万元-500万元部分，按百分之零点八计收服务费；
+                                成交价500万元-1000万元部分，按百分之零点六计收服务费；成交价
+                                1000万元-3000万元部分，按百分之零点三计收服务费；成交价3000万
+                                元-5000万元部分，按百分之零点二计收服务费；成交价5000万元-1亿
+                                元部分，按百分之零点零五计收服务费；成交价1亿元以上部分，不收
+                                费；服务费由该收费标准累加计算，此费用由委托方与竞得人各自承担
+                                一半；
+                            </div>
+                            <div>
+                                ⑤房地产拍卖网上交易系统相关事项及具体业务规则请参照本中心网站
+                                《深圳市土地房产交易中心网络交易规则》。每个标的物的详细备注及
+                                瑕疵披露请登录http://www.sz68.com查询。<p>咨询电话：0755-83785213</p> 竞
+                                买受理、答疑及本中心地址：福田区红荔西路8007号 深圳土地房产
+                                交易大厦附楼3楼。
+                            </div>
+                            <div class="groundSituation-ending" style="margin-top: .6rem;">深圳土地房产交易中心</div>
+                            <div class="groundSituation-ending"><#if notice.noticeDate??>${notice.noticeDate?string('yyyy年MM月dd日')}</#if></div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+
+            <!-- 标的详情 -->
+            <div class="object">
+                <div class="public-titel">
+                    <div class="public-titel-word">标的详情</div>
+                </div>
+                <div class="object-content">
+                    <div class="object-item">
+                        <div>
+                            <span>标的编号：</span>
+                            <span>${houseInfoList.name !}</span>
+                        </div>
+                        <div>
+                            <span>权利人性质：</span>
+                            <span>${houseInfoList.ownerType !}</span>
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div>
+                            <span>
+                               	 标的面积：
+                            </span>
+                            <span>
+                            <#if (houseInfoList.field2)??>
+								${houseInfoList.field2 !}㎡
+							<#else>
+                             	/
+                            </#if>
+                            </span>
+                        </div>
+                        <div>
+                            <span>
+                                	用途：
+                            </span>
+                            <span>
+                            <#if (houseInfoList.goodsUse)??>
+								${houseInfoList.goodsUse !}
+							<#else>
+                             	/
+                            </#if>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div>
+                            <span>来源：</span>
+                            <span>
+                            <#if (houseInfoList.goodsType)??>
+								${houseInfoList.goodsType !}
+							<#else>
+                             	/
+                            </#if>
+                            
+                            </span>
+                        </div>
+                        <div>
+                            <span>是否有租约：</span>
+                            <span>
+                            			<#if (houseInfoList.hasLease)??>
+								${houseInfoList.hasLease !}
+							<#else>
+                             	/
+                            </#if>
+                            
+                            </span>
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div>
+                            <span>标的性质：</span>
+                            <span>
+                            
+                            <#if (houseInfoList.kind)??>
+								${houseInfoList.kind !}
+							<#else>
+                             	/
+                            </#if>
+                            </span>
+                        </div>
+                        <div>
+                            <span>区域：</span>
+                            <span>
+                            
+                            <#if (houseInfoList.cantonArea)??>
+								${houseInfoList.cantonArea !}
+							<#else>
+                             	/
+                            </#if>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div>
+                            <span>权属证明：</span>
+                            <span>
+                            
+                            		<#if (houseInfoList.ownershipType)??>
+								${houseInfoList.ownershipType !}
+							<#else>
+                             	/
+                            </#if>
+                            </span>
+                        </div>
+                        <div>
+                            <span>地址：</span>
+                            <span>
+                           	<#if (houseInfoList.field0)??>
+								${houseInfoList.field0 !}
+							<#else>
+                             	/
+                            </#if> 
+                            </span>
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div>
+                            <span>标的数：</span>
+                            <span>1</span>
+                        </div>
+                        <div>
+                            <span>欠土地使用费：</span>
+                            <span>
+                            		<#if (houseInfoList.lackLandCost)??>
+								${houseInfoList.lackLandCost !}
+							<#else>
+                             	/
+                            </#if>
+                            
+                            </span>
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div>
+                            <span>欠地价：</span>
+                            <span>
+                            
+                            					<#if (houseInfoList.lackLandPrice)??>
+								${houseInfoList.lackLandPrice !}
+							<#else>
+                             	/
+                            </#if>
+                            </span>
+                        </div>
+                        <div>
+                            <span>保护债务的处理：</span>
+                            <span>		<#if (houseInfoList.unfinishedCost)??>
+								${houseInfoList.unfinishedCost !}
+							<#else>
+                             	/
+                            </#if></span>
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div>
+                            <span>委托人的相关说明及瑕疵声明：</span>
+                            <span>                           
+                             <#if (houseInfoList.tradeRemark)??>
+								${houseInfoList.tradeRemark !}
+							<#else>
+                             	/
+                            </#if></span>
+                        </div>
+                    </div>
+
+                    <!-- 备注 -->
+                    <div class="object-remark">
+                        <span class="remark-word">备注:</span>
+                    		<#if (remarthtml)??>
+								${remarthtml!}
+							<#else>
+                             	/
+                            </#if>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 竞价记录 -->
+            <div class="priceLot">
+                <div class="public-titel">
+                    <div class="public-titel-word">竞价记录</div>
+                </div>
+                
+                <div class="priceLot-content">
+                
+                   <!--  <div class="priceLot-list">
+                        <div class="priceLot-item">
+                            <div>
+                                <span>状态：</span>
+                                <span>成交价</span>
+                            </div>
+                            <div>
+                                <span>牌号/编号：</span>
+                                <span>成交价</span>
+                            </div>
+                        </div>
+                        <div class="priceLot-item">
+                            <div>
+                                <span>竞买出价（元）：</span>
+                                <span>613,000</span>
+                            </div>
+                            <div>
+                                <span>竞价时间：</span>
+                                <span>2018.07.26</span>
+                            </div>
+                        </div>
+                        <div class="priceLot-item">
+                            <div>
+                                <span>竞买人：</span>
+                                <span>深圳市乐房网络科技有限公司</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <#if timer.transType=='1' || timer.transType=='6'>
+                       <li  id="jingjiajilu">
+                       	
+                       </li>
+                      </#if>
+                    
+                </div>
+            </div>
+
+
+
+            <!-- 结果公示 -->
+            <div class="result">
+                <div class="public-titel">
+                    <div class="public-titel-word">结果公示</div>
+                </div>
+                
+                <div class="results" id="results" style="font-size:14px;line-height:1.5em;padding:0px 20px;">
+                 </div>
+            </div>
+
+
+
+
+
+
+            <!-- 竞买流程 -->
+            <div class="process">
+                <div class="public-titel">
+                    <div class="public-titel-word">竞买流程</div>
+                </div>
+                <div class="process-content">
+                    <img src="/tiaim/webwap/images/lct.png" alt="">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 隐藏导航栏 -->
+        <!-- 网站底部 -->
+        <#include "../../cms/public/footerwap.html">
+
+</body> 
+
+    <script src="${basePath}/webwap/js/common.js"></script>
+    <script src="${basePath}/tradewebpc/js/swiper.min.js"></script>
+	<script src="${basePath}/webwap/js/housedetails.js"></script>
+	<script type="text/javascript">
+	 	var basePath = "/tiaim";
+		var businessType="${target.businessType!}";
+		var targetNo ="${target.no!}";
+		var batchId = "${batch!}";
+		var targetId="${id!}";
+		var status="${target.status!}";
+		var isStop="${target.isStop!}";
+		var isSuspend="${target.isSuspend!}";
+		var transType="${target.batchType!}";
+		//竞价开始和结束时间
+		var biddingBeginTime="${(target.beginApplyTime?string('yyyy/MM/dd HH:mm'))!}";
+		var biddingEndTime="${(target.endApplyTime?string('yyyy/MM/dd HH:mm'))!}";
+		var gongaoMargindate="${(target.endEarnestTime?string('yyyy/MM/dd HH:mm'))!}";
+		
+		var isOldData="${params.isOldData!}";
+
+		//挂牌开始时间
+		var beginFocusTime="${(target.beginFocusTime?string('yyyy/MM/dd HH:mm'))!}";
+		//挂牌结束时间
+		var endFocusTime="${(target.endFocusTime?string('yyyy/MM/dd HH:mm'))!}";
+		//自由报价开始时间和自由报价结束时间
+		var beginLimitTime="${target.beginLimitTime!}";
+		var endTransTime="${(target.endTransTime?string('yyyy/MM/dd HH:mm'))!}";
+
+		//var currentTime="${currentdate?string('yyyy/MM/dd HH:mm')}";
+		var currentTime="${params.server_time!}";
+		currentTime=currentTime.replace(/-/g,"/");
+		var nowTime = new Date(currentTime).getTime();
+		//TARGET.TRANS_TYPE,null,'无','0','挂牌','1','拍卖','2','招标(公开招标)','3','挂牌(一次竞价)','4','网络竞价','9','邀请招标') as TRANS_TYPE2,
+		var etime="${params.phase_end_time!}";
+		etime=etime.replace(/-/g,"/");
+		var btime="${params.phase_begin_time!}" ;
+		btime=btime.replace(/-/g,"/");
+		var started = 0 ;
+		var landSetInterval=null;
+		var phare = "${params.phase!}"
+		var landDetailIntervalTime=1000;//定时刷新时间
+		$(function() {
+			//当前阶段索引，0公告期，1挂牌期，2网上报价期，3现场竞价期，4限时竞价期，5交易结束，6投标期，7现场开标
+			if(phare == "0"||phare == "1"||phare == "2"||phare == "4"||phare == "6"){
+				document.getElementById('timename').innerHTML = "距结束：";
+				countdown();
+			}else if(phare=="3" || phare=="7"){
+				document.getElementById('timename').innerHTML = "已开始：";
+				started =nowTime - new Date(btime).getTime();
+				countup();
+
+			}
+			if(phare == '5'){//交易中的标的才时时获取竞价记录
+				jingjiajilurest();
+			}else {//其他情况 调用 一次即可
+				setInterval(function(){
+					jingjiajilurest();
+				},landDetailIntervalTime);
+			}
+			jingjia();
+	 		resultnoticedetail(targetId);
+			var gonggaoqi_begindate=biddingBeginTime;
+			var gonggaoqi_enddate=biddingEndTime;
+			var gonggaoqi_margindate=gongaoMargindate
+			var guapaiqi_begindate=beginFocusTime;
+			var guapaiqi_enddate=endFocusTime;
+			var jiaoyiqi_begindate=beginLimitTime.replace(/-/g,"/");
+			var jiaoyiqi_enddate="${(timer.endLimitTime?string('yyyy/MM/dd HH:mm'))!}";
+			var status="${(timer.status)!}";
+			if(status=='1'){ //没有挂牌时间轴
+				if(gonggaoqi_begindate!=""&&gonggaoqi_enddate!=""&&jiaoyiqi_begindate!=""){
+					var gonggaoqi_begin = new Date(gonggaoqi_begindate); //初始格时间（最小）
+					var gonggaoqi_end = new Date(gonggaoqi_enddate);
+					var gonggaoqi_margin = new Date(gonggaoqi_margindate);
+
+					var jiaoyiqi_begin = new Date(jiaoyiqi_begindate);
+					var jiaoyiqi_end = new Date(jiaoyiqi_enddate);
+
+					var last_date = jiaoyiqi_end;
+					if(jiaoyiqi_enddate == ""){
+						last_date = jiaoyiqi_begin;
+					}
+
+					if(countMunites(last_date,gonggaoqi_margin)==0.1){
+
+						last_date = gonggaoqi_margin;
+					}
+					// 最大相差小时
+					var maxdays = countMunites(new Date(getYearMonthDayStr(last_date)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					// 时间轴总长度 单位px
+					var totalSize = Number(600);
+					// 每格所占比例 单位px
+					var simple = Number(totalSize/maxdays);
+
+					// 公告期
+					var ggdays = countMunites(new Date(getYearMonthDayStr(gonggaoqi_end)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					var ggdaym = countMunites(new Date(getYearMonthDayStr(gonggaoqi_margin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+					$(".present_pointerbg").css("left", "1px");
+					var ggmini=0;
+					if(ggdays*simple<20){
+						ggmini=20-ggdays*simple
+					}
+					$(".present_pointerbg_core").css("width", ggdaym*simple+ggmini+"px");
+					$(".present_pointerbg_left").css("float","left");
+					$(".present_pointerbg_left").css("margin-top","-5px");
+					$(".present_pointerbg_make").css("float","left");
+
+					if(ggdays == 0.1){
+						$(".present_pointerbg_right").css("float","right");
+						$(".present_pointerbg_right").css("margin-top","-5px");
+					}else{
+						$(".present_pointerbg_right").css("float","right");
+						$(".present_pointerbg_right").css("margin-top","-5px");
+					}
+
+
+					// 交易期
+					var jydays = countMunites(new Date(getYearMonthDayStr(jiaoyiqi_begin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+
+
+
+					// 当前时刻
+					var curdays = countMunites(new Date(), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					if(Number(curdays-maxdays) > 0.1){
+						$(".present_now").css("left", "690px");
+					}else if(curdays == 0.1){
+						$(".present_now").css("left", "65px");
+					}else{
+						$(".present_now").css("left", curdays*simple+65+"px");
+					}
+				}
+			}else{ //有挂牌时间轴
+				if(gonggaoqi_begindate!=""&&gonggaoqi_enddate!=""&&guapaiqi_begindate!=""&&guapaiqi_enddate!=""&&jiaoyiqi_begindate!=""){
+					var gonggaoqi_begin = new Date(gonggaoqi_begindate); //初始格时间（最小）
+					var gonggaoqi_end = new Date(gonggaoqi_enddate);
+					var gonggaoqi_margin = new Date(gonggaoqi_margindate);
+
+					var guapaiqi_begin = new Date(guapaiqi_begindate);
+					var guapaiqi_end = new Date(guapaiqi_enddate);
+
+					var jiaoyiqi_begin = new Date(jiaoyiqi_begindate);
+					var jiaoyiqi_end = new Date(jiaoyiqi_enddate);
+
+
+					if(isNaN(guapaiqi_end)){
+						if(countMunites(guapaiqi_begin,gonggaoqi_margin)==0.1){
+							guapaiqi_end = gonggaoqi_margin;
+						}else{
+							guapaiqi_end = guapaiqi_begin;
+						}
+					}
+
+					var jiaoyiqi_end = new Date(jiaoyiqi_enddate);
+
+					var last_date = jiaoyiqi_end;
+					if(jiaoyiqi_enddate == ""){
+
+						last_date = jiaoyiqi_begin;
+					}
+					if(isNaN(last_date)){
+
+						last_date = guapaiqi_end;
+					}
+					if(isNaN(last_date)){
+
+						last_date = guapaiqi_begin;
+					}
+					if(isNaN(last_date)){
+						last_date = gonggaoqi_end;
+					}
+					if(countMunites(last_date,guapaiqi_end)==0.1){
+						last_date = guapaiqi_end;
+
+
+					}
+					if(countMunites(last_date,gonggaoqi_margin)==0.1){
+
+						last_date = gonggaoqi_margin;
+					}
+					// 最大相差天数
+					var maxdays = countMunites(new Date(getYearMonthDayStr(last_date)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+					// 时间轴总长度 单位px
+					var totalSize = Number(600);
+					// 每格所占比例 单位px
+					var simple = Number(totalSize/maxdays);
+
+					// 公告期
+					var ggdays = countMunites(new Date(getYearMonthDayStr(gonggaoqi_end)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					var ggdaym = countMunites(new Date(getYearMonthDayStr(gonggaoqi_margin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+					$("#gonggaodate").css("left", "1");
+					$("#gonggaodate").find(".present_pointerbg_left").css("margin-top","-5px");
+					var ggmini=0;
+					if(ggdays*simple<40){
+						ggmini=40-ggdays*simple
+					}
+					$("#gonggaodate").find(".present_pointerbg_core").css("width",ggdaym*simple+ggmini+"px");
+
+
+					$("#gonggaodate").find(".present_pointerbg_right").css("margin-top","-5px");
+
+
+
+
+
+					// 挂牌期
+					var gpdays = countMunites(new Date(getYearMonthDayStr(guapaiqi_begin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					var gpdaye = countMunites(new Date(getYearMonthDayStr(guapaiqi_end)), new Date(getYearMonthDayStr(guapaiqi_begin)));
+					var gpdayd = countMunites(new Date(getYearMonthDayStr(guapaiqi_end)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					var gpmini=0;
+					if( gpdaye*simple<20){
+						gpmini=20-gpdaye*simple;
+						$("#guapaidate").find(".present_pointerbg_core").css("width", "20px");
+					}else{
+						if(gpdaye*simple-ggmini>600){
+							$("#guapaidate").find(".present_pointerbg_core").css("width", "600px");
+						}else{
+							$("#guapaidate").find(".present_pointerbg_core").css("width", gpdaye*simple-ggmini+"px");
+						}
+
+					}
+					$("#guapaidate").css("left",gpdays*simple+"px");
+
+
+					$("#guapaidate").find(".present_pointerbg_left").css("margin-top","-5px");
+
+
+
+					$("#guapaidate").find(".present_pointerbg_right").css("margin-top","-5px");
+
+
+					if(isNaN(gpdaye) || isNaN(gpdayd)){
+						$("#guapaidate").find(".present_pointerbg_right").css("display", "none")
+						$("#guapaidate").find(".present_pointerbg_right").css("margin-top","-5px");
+					}
+
+
+					// 交易期
+					var jydays = countMunites(new Date(getYearMonthDayStr(jiaoyiqi_begin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+
+
+
+
+					// 当前时刻
+					var curdays = countMunites(new Date(), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					if(Number(curdays-maxdays) > 0.1){
+						$(".present_now").css("left", "690px");
+					}else if(curdays == 0.1){
+						$(".present_now").css("left", "65px");
+					}else{
+						$(".present_now").css("left", curdays*simple+65+"px");
+					}
+
+				}else{
+					var gonggaoqi_begin = new Date(gonggaoqi_begindate); //初始格时间（最小）
+					var gonggaoqi_end = new Date(gonggaoqi_enddate);
+					var gonggaoqi_margin = new Date(gonggaoqi_margindate);
+
+					var guapaiqi_begin = new Date(guapaiqi_begindate);
+					var guapaiqi_end = new Date(guapaiqi_enddate);
+
+					var jiaoyiqi_begin = new Date(jiaoyiqi_begindate);
+					var jiaoyiqi_end = new Date(jiaoyiqi_enddate);
+					if(isNaN(guapaiqi_end)){
+						if(countMunites(guapaiqi_begin,gonggaoqi_margin)==0.1){
+							guapaiqi_end = gonggaoqi_margin;
+						}else{
+							guapaiqi_end = guapaiqi_begin;
+						}
+					}
+					var jiaoyiqi_begin = new Date(jiaoyiqi_begindate);
+					var last_date = jiaoyiqi_end;
+					if(jiaoyiqi_enddate == ""){
+						last_date = jiaoyiqi_begin;
+					}
+					if(isNaN(jiaoyiqi_begin)){
+						if(countMunites(guapaiqi_end,gonggaoqi_end)==0.1){
+							jiaoyiqi_begin = gonggaoqi_end;
+						}else{
+							jiaoyiqi_begin = guapaiqi_end;
+						}
+					}
+
+					var jiaoyiqi_end = new Date(jiaoyiqi_enddate);
+
+					var last_date = jiaoyiqi_end;
+					if(jiaoyiqi_enddate == ""){
+
+						last_date = jiaoyiqi_begin;
+					}
+					if(isNaN(last_date)){
+
+						last_date = guapaiqi_end;
+					}
+					if(isNaN(last_date)){
+
+						last_date = guapaiqi_begin;
+					}
+					if(isNaN(last_date)){
+						last_date = gonggaoqi_end;
+					}
+					if(countMunites(last_date,guapaiqi_end)==0.1){
+						last_date = guapaiqi_end;
+					}
+					if(countMunites(last_date,gonggaoqi_margin)==0.1){
+						last_date = gonggaoqi_margin;
+					}
+
+
+					// 最大相差天数
+					var maxdays = countMunites(new Date(getYearMonthDayStr(last_date)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+					// 时间轴总长度 单位px
+					var totalSize = Number(600);
+					// 每格所占比例 单位px
+					var simple =Number(totalSize/maxdays);
+
+					// 公告期
+					var ggdays = countMunites(new Date(getYearMonthDayStr(gonggaoqi_end)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					var ggdaym = countMunites(new Date(getYearMonthDayStr(gonggaoqi_margin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					var ggmini=0;
+					if(ggdays*simple<20){
+						ggmini=20-ggdays*simple
+					}
+
+
+					$("#gonggaodate").find(".present_pointerbg_core").css("width",ggdaym*simple+ggmini+"px");
+
+					$("#gonggaodate").css("left", "1px");
+					$("#gonggaodate").find(".present_pointerbg_left").css("float","left");
+					$("#gonggaodate").find(".present_pointerbg_left").css("margin-top","-5px");
+
+					$("#gonggaodate").find(".present_pointerbg_right").css("float","right");
+					$("#gonggaodate").find(".present_pointerbg_right").css("margin-top","-5px");
+
+					// 挂牌期
+					var gpdays = countMunites(new Date(getYearMonthDayStr(guapaiqi_begin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+					var gpdaye = countMunites(new Date(getYearMonthDayStr(guapaiqi_end)), new Date(getYearMonthDayStr(guapaiqi_begin)));
+					var gpdayd = countMunites(new Date(getYearMonthDayStr(guapaiqi_end)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+
+					var gpmini=0;
+					if( gpdaye*simple<20){
+						gpmini=20-gpdaye*simple;
+						$("#guapaidate").find(".present_pointerbg_core").css("width", "20px");
+					}else{
+						if(gpdaye*simple-ggmini>600){
+							$("#guapaidate").find(".present_pointerbg_core").css("width", "600px");
+						}else{
+							$("#guapaidate").find(".present_pointerbg_core").css("width", gpdaye*simple-ggmini+"px");
+						}
+
+					}
+
+					$("#guapaidate").css("left",gpdays*simple+"px");
+
+
+					$("#guapaidate").find(".present_pointerbg_left").css("float","left");
+					$("#guapaidate").find(".present_pointerbg_left").css("margin-top","-5px");
+
+
+					if(isNaN(gpdaye) || isNaN(gpdayd)){
+						$("#guapaidate").find(".present_pointerbg_right").css("display", "none")
+						$("#guapaidate").find(".present_pointerbg_core").css("width", "10px");
+					}else{
+						$("#guapaidate").find(".present_pointerbg_right").css("float","right");
+						$("#guapaidate").find(".present_pointerbg_right").css("margin-top","-5px");
+					}
+
+
+					// 交易期
+					var jydays = countMunites(new Date(getYearMonthDayStr(jiaoyiqi_begin)), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+					// 当前时刻
+					var curdays = countMunites(new Date(), new Date(getYearMonthDayStr(gonggaoqi_begin)));
+
+					if(Number(curdays-maxdays) > 0.1){
+						$(".present_now").css("left", "690px");
+					}else if(curdays == 0.1){
+						$(".present_now").css("left", "65px");
+					}else{
+						$(".present_now").css("left", curdays*simple+65+"px");
+					}
+
+				}
+			}
+		});
+
+		/**
+		 * 设置时间轴的展示
+		 * @param {Object} $obj 展示时间轴的容器
+		 * @param {Object} spanWidth 每个格子的宽度
+		 * @param {Object} beginDate 开始日期
+		 * @param {Object} endDate 结束日期
+		 * @param {Object} gonggaoqi_begin 时间中的最小日期
+		 */
+		/* function setTimeLine(beginDate, endDate, datewidth) {
+
+            //计算开始和结束日期的天数
+            var days = countDays(new Date(getYearMonthDayStr(endDate)), new Date(getYearMonthDayStr(beginDate)));
+            //取得1个小时对应的长度
+            var hourPerLenth = datewidth / days;
+            return hourPerLenth;
+        } */
+
+		/**
+		 * 获取日期的年月日字符串：yyyy-MM-dd
+		 * @param {Object} dateObj
+		 */
+		function getYearMonthDayStr(dateObj) {
+			var year = dateObj.getFullYear();
+			var month = dateObj.getMonth() + 1;
+			var day = dateObj.getDate();
+			var hours=dateObj.getHours();
+			var minutes=dateObj.getMinutes();
+			var seconds=dateObj.getSeconds();
+			if(month < 10) {
+				month = "0" + month;
+			}
+			if(day < 10) {
+				day = "0" + day;
+			}
+			if(hours<10){
+				hours="0"+hours
+			}
+			if(minutes<10){
+				minutes="0"+minutes
+			}
+			if(seconds<10){
+				seconds="0"+seconds
+			}
+			var nowDateStr = year + "-" + month + "-" + day+" "+hours+":"+minutes;
+			return nowDateStr.replace(/-/g,"/");
+		}
+		/**
+		 * 获取两个时间相差的天数
+		 * @param {Object} bigDate
+		 * @param {Object} smallDate
+		 */
+		function countDays(bigDate, smallDate) {
+
+			var rst = (bigDate.getTime() - smallDate.getTime()) / (1000 * 60 * 60 * 24);
+
+			if(parseInt(rst) <=0){
+				rst = 0.1;
+			}
+			return rst;
+		}
+		function countHours(bigDate, smallDate) {
+
+			var rst = (bigDate.getTime() - smallDate.getTime()) / (1000 * 60 * 60);
+
+			if(parseInt(rst) <=0){
+				rst = 0.1;
+			}
+			return rst;
+		}
+		function countMunites(bigDate, smallDate) {
+
+			var rst = (bigDate.getTime() - smallDate.getTime()) / (1000 * 60);
+
+			if(parseInt(rst) <=0){
+				rst = 0.1;
+			}
+			return rst;
+		}
+		/**
+		 * 拼接时间轴的格子数量
+		 * @param {Object} days
+		 * @param {Object} simple
+		 */
+		function getSpanStr(days, simple) {
+			var spanStr = "";
+			for(var i = 0; i < days; i++) {
+				spanStr += "<span style='margin-left:"+simple+"px'>&nbsp;</span>";
+			}
+			return spanStr;
+		}
+	</script>
+	
+	<script>
+
+	function viewUrlPdf(url,name,fileName,isLocal){
+		var reg = RegExp(/3/);
+		if(fileName!=null && fileName.indexOf(".pdf") != -1){
+			if(isLocal=="isLocal"){
+				window.open(basePath + "/common/plugins/pdf/web/viewer.html?file="+encodeURIComponent(url));
+			}else{
+				window.open(basePath + "/common/plugins/pdf/web/viewer.html?file="+encodeURIComponent(basePath+"/document/viewUrlPdf?name="+name+"&urlStr="+encodeURIComponent(encodeURIComponent(url))));
+			}
+			
+		}else{
+			window.open(url);
+		}
+
+	}
+
+	function showfullimg(event){
+		var index=event.target.getAttribute("data-index")
+		$(".back").css("display","block");
+		var galleryTop = new Swiper('.fullviews', {
+			initialSlide:index,
+			spaceBetween: 0,
+			navigation: {
+				nextEl: '.swp1rt1',
+				prevEl: '.swplft11',
+			},
+
+		});
+	}
+	function canclePrew(){
+		$(".back").css("display","none");
+	}
+	var jingjiafirst=false;
+	var isShowHouseMore=0;
+	var totalRecord=10;
+	$("#showLandBidRecordMore").hide();
+	function jingjiajilu(){
+		if(!jingjiafirst){
+			jingjiafirst=true;
+			$.post(basePath+"/web/getBiddingRecordList?t="+$.now(),{"id":"${id}","type":"house","currentPage":1,"pageSize":10},function(r){
+				if(r.code == 0){
+					totalRecord=JSON.parse(r.pager).totalRecord;
+					isShowHouseMore=JSON.parse(r.pager).totalRecord;
+					if(isShowHouseMore!=null && isShowHouseMore > 0){
+						 $("#showLandBidRecordMore").show();
+				    } 
+					appendjingjiaHtml($("#jingjiajilu"),JSON.parse(r.pager).results);
+				
+				
+					
+				}else{
+					$.Pop(r.msg,'alert',function(){});
+				}
+			});
+			setInterval(function () {
+				$.post(basePath+"/web/getBiddingRecordList?t="+$.now(),{"id":"${id}","type":"house","currentPage":1,"pageSize":10},function(r){
+					if(r.code == 0){
+						totalRecord=JSON.parse(r.pager).totalRecord;
+						isShowHouseMore=JSON.parse(r.pager).totalRecord;
+						appendjingjiaHtml($("#jingjiajilu"),JSON.parse(r.pager).results);
+					}else{
+						$.Pop(r.msg,'alert',function(){});
+					}
+				});
+			}, 10000);
+			
+		}else{
+		}
+		
+	}
+
+	function appendjingjiaHtml(element,data){
+		$(element).empty();
+		var htmlStr="";
+		htmlStr = '<table class="conomy_table" style="width:100%;margin-top:20px;"><tr style="background: #eee;">'+
+				'<th>序号</th><th>竞买人</th><th>报价(元)</th><th>报价时间</th><th>状态</th>'+
+				'</tr>';
+		for(var i = 0; i < data.length; i++) {
+			htmlStr+='<tr style="border-bottom:1px solid #c8ccd0;line-height:40px;">';
+			htmlStr+='<td>'+(totalRecord-i)+'</td>';
+			/* htmlStr+='<td>'+data[i].cardNo+'</td>'; */
+			htmlStr+='<td>'+data[i].bidderName+'</td>';
+			htmlStr+='<td>'+(data[i].price==null||data[i].price==undefined?"": commafy(data[i].price))+'</td>';
+			htmlStr+='<td>'+data[i].offerDate+'</td>';
+			htmlStr+='<td>'+data[i].statusName+'</td></tr>';
+
+		}
+		htmlStr+='</table>';
+		$(element).append(htmlStr);
+	}
+	function highestPri() {
+		if($("#highestPrice").length>0){
+			setInterval(function () {
+				$.ajax({
+					url: "${basePath}/web/getBiddingRecordHeight?data="+$.now(),
+					type: "POST",
+					data: {"targetId": "${id}"},
+					dataType: "json", //指定服务器返回的数据类型
+					success: function(r) {
+						if(r.code == 0 && r.result!=null) {
+							$("#highestPrice").html(r.result.price!=null?r.result.price.toLocaleString('en-US'):"");
+						}
+					}
+				});
+			}, 10000);
+		}
+	}
+
+	var galleryThumbs = new Swiper('.gallery-thumbs', {
+		spaceBetween: 2,
+		slidesPerView: 2,
+		freeMode: true,
+		watchSlidesVisibility: true,
+		watchSlidesProgress: true,
+	});
+	var galleryTop = new Swiper('.gallery-top', {
+		spaceBetween: 2,
+		navigation: {
+			nextEl: '.swp1',
+			prevEl: '.swp12',
+		},
+		thumbs: {
+			swiper: galleryThumbs
+		}
+	});
+	/* $('.bids_core').click(function(){
+        $('.enter_case').show();
+        $('.popup').show();
+        $('#mask').width($(document.body).width());
+        $('#mask').height($(document.body).height());
+        $('#mask').show();
+    }); */
+	$('.close').click(function(){
+		$('.enter_case').hide();
+		$('.popup').hide();
+		$('#mask').hide();
+	})
+	$('.announcement-popup').hide();
+	$('.popup-close').click(function(){
+		$('.announcement-popup').hide();
+	});
+	$('.remark-word').click(function(){
+		$('.announcement-popup').show();
+	});
+	
+	
+	
+	
+	function jingjiajilurest() {//刷新竞价记录
+		var recordst=0;
+		$.ajaxSettings.async = false;//同步请求
+		$.post(basePath + "/web/landrecord?t=" + $.now(),
+				{"id" : "${id}"},
+				function(r) {
+					if (r.code == 0) {
+						//是否双标
+						if(r.params.double_competition==1){
+							if(r.params.offers2 !=null && typeof(r.params.offers2) != 'undefined'){
+								landDetailOffers2=r.params.offers2;
+							}
+							if(r.params.offer_count2 !=null && typeof(r.params.offer_count2) != 'undefined'){
+								landDetailOfferCount2=r.params.offer_count2;
+							}
+							if(r.params.phase==3 || r.params.phase==4 || r.params.phase==7){
+								if(r.params.max_price2!=null){//当前价
+									$('#newprice').next('.moles').html(commafy(r.params.max_price2));
+
+								}else{
+									$('#newprice').next('.moles').html(commafy(r.params.max_price));
+									//$('#final_price').next('.moles2').html(commafy(r.params.final_price));
+								}
+							}
+						}
+
+						if(r.params.offers !=null && typeof(r.params.offers) != 'undefined'){
+							landDetailOffers=r.params.offers;
+						}
+						if(r.params.offer_count !=null && typeof(r.params.offer_count) != 'undefined'){
+							landDetailOfferCount=r.params.offer_count;
+						}
+						$('#newprice').next('.moles').html(commafy(r.params.max_price));
+						//$('#final_price').next('.moles2').html(commafy(r.params.final_price));
+						if(isOldData=="1"){
+						}else{
+							$('#bidderNumber').next('.moles2').html(bidderNumberStr(r.params.license_count));
+						}
+
+						//刷新倒计时
+						var cur_phase=r.params.phase
+
+						if(cur_phase != phare){
+							if(cur_phase =='5'){//交易结束
+								phare=cur_phase;
+								window.location.reload();
+							}
+							//当前阶段索引，0公告期，1挂牌期，2网上报价期，3现场竞价期，4限时竞价期，5交易结束，6投标期，7现场开标
+							if(cur_phase == "4"){
+								var _currentTime=r.params.server_time;
+								_currentTime=_currentTime.replace(/-/g,"/");
+								var _etime=r.params.phase_end_time;
+								_etime=_etime.replace(/-/g,"/");
+								var _btime=r.params.phase_begin_time ;
+								_btime=_btime.replace(/-/g,"/");
+								if((new Date(_etime).getTime())!= (new Date(etime).getTime())){
+									nowTime=new Date(_currentTime).getTime();
+									btime=_btime;
+									etime=_etime;
+								}
+								window.clearInterval(landSetInterval);
+								countdown();
+
+							}else if(cur_phase == "0"||cur_phase == "1"||cur_phase == "2"||cur_phase == "6"){
+								countdown();
+							}else if(cur_phase=="3" || cur_phase=="7"){
+								countup();
+							}
+							phare=cur_phase;
+						}else if(phare == '4'){
+							var _etime=r.params.phase_end_time;
+							_etime=_etime.replace(/-/g,"/");
+							if((new Date(_etime).getTime())!= (new Date(etime).getTime())){
+								// window.location.reload();
+								var _currentTime=r.params.server_time;
+								_currentTime=_currentTime.replace(/-/g,"/");
+								var _btime=r.params.phase_begin_time ;
+								_btime=_btime.replace(/-/g,"/");
+								nowTime=new Date(_currentTime).getTime();
+								etime=_etime;
+								btime=_btime;
+								window.clearInterval(landSetInterval);
+								countdown();
+							}
+						}
+
+
+					} else {
+						$.Pop(r.msg, 'alert', function() {});
+					}
+				});
+	}
+	
+	
+	
+	var jingjiafirst = false;
+		function jingjia() {
+		
+			if (!jingjiafirst) {
+        
+				jingjiafirst = true;
+				$.post(basePath + "/web/getBiddingRecordList?t=" + $.now(), {
+					"id" : "${id}",
+					"type" : "house",
+					"currentPage" : 1,
+					"pageSize" : 10
+				}, function(r) {
+					if (r.code == 0) {
+						appendjingjiaHtml($("#jingjiajilu"), JSON
+								.parse(r.pager).results);
+					} else {
+						$.Pop(r.msg, 'alert', function() {
+						});
+					}
+				});
+				setInterval(function() {
+					$.post(basePath + "/web/getBiddingRecordList?t=" + $.now(),
+							{
+								"id" : "${id}",
+								"type" : "house",
+								"currentPage" : 1,
+								"pageSize" : 10
+							}, function(r) {
+								if (r.code == 0) {
+									appendjingjiaHtml($("#jingjiajilu"), JSON
+											.parse(r.pager).results);
+								} else {
+									$.Pop(r.msg, 'alert', function() {
+									});
+								}
+							});
+				}, 10000);
+			} else {
+			}
+		}
+
+function appendjingjiaHtml(element, data) {
+ 			
+ 			
+ 			$(element).empty();
+ 			var htmlStr="";
+ 			for(var i = 0; i < data.length; i++) {
+ 				let price=data[i].price == null||data[i].price == undefined?"":data[i].price
+ 				htmlStr+='<div class="conomy-tr">';
+ 			
+ 				htmlStr+=' <div>'+
+ 				'               <span>竞买人：</span>'+
+ 				'               <span>'+data[i].bidderName+'</span>'+
+ 				'          </div>';
+ 	
+ 				htmlStr+=/* ' <div class="middle">'+
+ 				'               <span>竞买编号：</span>'+
+ 				'               <span>'+ data[i].licenseNoDetail+'</span>'+
+ 				'          </div>'+ */
+ 				'           <div class="middle">'+
+ 				'               <span>竞买出价(元)：</span>'+
+ 				'               <span>'+ price+'</span>'+
+ 				'          </div>'+
+ 				'           <div class="middle">'+
+ 				'               <span>竞价时间：</span>'+
+ 				'               <span>'+data[i].offerDate+'</span>'+
+ 				'          </div>'+
+ 				'           <div>'+
+ 				'               <span>状态：</span>'+
+ 				'               <span>'+data[i].statusName+'</span>'+
+ 				'          </div>'+
+ 				'          </div>'
+ 				console.log(htmlStr)
+ 			}
+ 			$(element).append(htmlStr);
+
+ 		}				
+				
+				function resultnoticedetail(id){
+		 			if(!firlst){
+		 				firlst=!firlst;
+		 				return false;
+		 				
+		 			}
+		 			var urlStr =basePath+ "/web/resulthousebytargetId";
+		 			$.ajax({
+		 				url: urlStr,
+		 				type: "POST",
+		 				data: {
+		 					"targetId": id
+		 				},
+		 				dataType: "json", //指定服务器返回的数据类型
+		 				success: function(r) {
+		 					if(r.code == 0) {
+		 						resulthtml($("#results"),r.notice,r.fileExtName)
+		 					}
+		 					
+		 				}
+		 			});
+		 		}
+</script>
+	
+	
+</html>

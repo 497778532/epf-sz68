@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公告详情</title>
+  <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/houseDetails.css">
+  <style>
+    .popup-title {
+      height: 4rem;
+      padding: 0 1.2rem;
+      box-sizing: border-box;
+    }
+
+    .popup-content {
+      padding: 0 1.2rem 1.2rem 1.2rem;
+      font-size: 1.2rem
+    }
+  </style>
+</head>
+<script>
+  var basePath = "${basePath}";
+</script>
+
+<body>
+  <#include "/webwap/common/header.html">
+    <div class="page-epf houseDetails" >
+      <!-- 头部 -->
+
+      <div class="content-core" style="min-height:70rem">
+        <!-- 公告详情 -->
+        <div class="subject">
+          <div class="public-titel">
+            <div class="public-titel-word">公告详情</div>
+          </div>
+          <div class="subject-content">
+            <div class="subject-title">
+              <span>${notice.name!}<#if !notice.name??>${notice.no!}</#if></span>
+            </div>
+            <div class="subject-data">
+              <span>发布日期：</span>
+              <span>${notice.noticeDate?string('yyyy-MM-dd')}</span>
+            
+            </div>
+          </div>
+        </div>
+
+
+        <div class="notice">
+          <div class="notice-content">
+            <div class="notice-init">
+ 
+              <div class="notice-init-core">
+                根据有关法律、法规及《深圳市土地交易市场管理规定》，
+                受法院及有关单位委托，深圳市土地房产交易中心将公开拍卖下
+                列房屋和土地使用权， 凡有意者请登录到交易中心网站
+                www.sz68.com办理竞买申请手续。(详细情况请查询交易中心网
+                站www.sz68.com或致电或到中心竞买咨询台咨询及索取相关资
+                料)。 以下清单中的数据、信息以拍卖当天公布的顺序清单为准。
+              </div>
+            </div>
+
+
+
+            <#if houseNotice?? && (houseNotice?size &gt; 0)>
+              <#list houseNotice as transitem>
+                <div class="groundSituation">
+                  <div class="groundSituation-title">
+                    <#if notice.noticeDate??>${notice.noticeDate?string('yyyy')}</#if>
+                    第（<span>${transitem.yearNo!}</span>）场房产
+                    <#if transitem.batchType==0>
+                      拍卖交易
+                      <#elseif transitem.batchType==1>
+                        挂牌交易
+                        <#elseif transitem.batchType==6>
+                          网络竞价交易
+                    </#if>
+                    （总第<span>${transitem.no!}</span>场）
+                  </div>
+                  <div class="groundSituation-info">
+                    <div>
+                      <span class="groundSituation-left">拍卖时间：</span>
+                      <span class="groundSituation-right">${transitem.beginLimitTime?string('yyyy-MM-dd HH:mm')}</span>
+                    </div>
+                    <div>
+                      <span class="groundSituation-left">拍卖方式：</span>
+                      <span class="groundSituation-right">
+                        <#if transitem.batchType==0>
+                          现场拍卖
+                          <#elseif transitem.batchType==1>
+                            现场挂牌
+                            <#elseif transitem.batchType==6>
+                              网络竞价
+                        </#if>
+                      </span>
+                    </div>
+                    <div>
+                      <span class="groundSituation-left">竞买申请时间：</span>
+                      <span class="groundSituation-right">${transitem.beginEarnestTime?string('yyyy-MM-dd
+                        HH:mm')}</span>
+                    </div>
+                  </div>
+                  <#if transitem.targetlist?? && transitem.targetlist?size &gt; 0>
+                    <#list transitem.targetlist as house>
+                      <div class="shell">
+                        <div class="shell-title">
+                          <div><a style="color:#008CD6"
+                              href="${basePath}/wap/houseDetail?id=${house.ID!}&code=0015&goodId=${house.GOODID!}">${house_index+1!}.${house.NAME!}</a>
+                          </div>
+                          <div onclick="gethouseremark('${house.LOB_REMARK!}')">查看备注</div>
+                        </div>
+                        <div class="shell-content">
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">起始价（元）：</span>
+                              <span class="shell-right">${(house.BEGIN_PRICE?string(',###.##'))!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">保证金（元）：</span>
+                              <span class="shell-right">${(house.EARNEST_MONEY?string(',###.##'))!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">标的面积（㎡）：</span>
+                              <span class="shell-right">${house.AREA_SIZE!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">用途：</span>
+                              <span class="shell-right2">${house.GOODS_USE!}</span>
+                            </div>
+                            <div>
+                              <span class="shell-left">区域：</span>
+                              <span class="shell-right2">${house.AREA!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">位置：</span>
+                              <span class="shell-right2">${house.ADDRESS!}</span>
+                            </div>
+                            <div>
+                              <span class="shell-left">权力人性质：</span>
+                              <span class="shell-right2">${house.OWNER_TYPE!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">权属证明：</span>
+                              <span class="shell-right2">${house.OWNERSHIP_TYPE!}</span>
+                            </div>
+                            <div>
+                              <span class="shell-left">标的性质：</span>
+                              <span class="shell-right2">${house.KIND!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">是否欠地价：</span>
+                              <span class="shell-right2">${house.LACK_LAND_PRICE!}</span>
+                            </div>
+                            <div>
+                              <span class="shell-left">是否有租约：</span>
+                              <span class="shell-right2">${house.HAS_LEASE!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">欠土地使用费：</span>
+                              <span class="shell-right2">${house.LACK_LAND_COST!}</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">委托人的相关说明及瑕疵证明：</span>
+                              <span class="shell-right2">见备注</span>
+                            </div>
+                          </div>
+                          <div class="shell-item">
+                            <div>
+                              <span class="shell-left">水电、煤气、管理费等相关未受法律保护债务的处理：</span>
+                              <span class="shell-right2">见备注</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </#list>
+                  </#if>
+                </div>
+              </#list>
+            </#if>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="warm">
+              <div class="warm-title">网上交易温馨提示：</div>
+              <div class="warm-content">
+                <div>
+                  ①上网实名注册，申请人进入市土地房产交易中心唯一网址：http://www.sz68.com，
+                  点击网上交易，按要求进行实名注册并上传身
+                </div>
+                <div>
+                  ②注册成功后，登录交易系统。查标的，选标的，选银行，生成订单，
+                  按订单生成的对应账号，缴纳保证金；
+                </div>
+                <div>
+                  ③本中心采用纯网络的交易方式，请竞买人在公告规定的交易时间进入
+                  交易系统自行进行网络竞价交易；
+                </div>
+                <div>
+                  ④交易费用：每个交易标的物，成交价100万元以下部分,按百分之一计
+                  收服务费；成交价100万元-500万元部分，按百分之零点八计收服务费；
+                  成交价500万元-1000万元部分，按百分之零点六计收服务费；成交价
+                  1000万元-3000万元部分，按百分之零点三计收服务费；成交价3000万
+                  元-5000万元部分，按百分之零点二计收服务费；成交价5000万元-1亿
+                  元部分，按百分之零点零五计收服务费；成交价1亿元以上部分，不收
+                  费；服务费由该收费标准累加计算，此费用由委托方与竞得人各自承担
+                  一半；
+                </div>
+                <div>
+                  ⑤房地产拍卖网上交易系统相关事项及具体业务规则请参照本中心网站
+                  《深圳市土地房产交易中心网络交易规则》。每个标的物的详细备注及
+                  瑕疵披露请登录http://www.sz68.com查询。<p>咨询电话：0755-83785213</p> 竞
+                  买受理、答疑及本中心地址：福田区红荔西路8007号 深圳土地房产
+                  交易大厦附楼3楼。
+                </div>
+                <div class="groundSituation-ending" style="margin-top: .6rem;">深圳土地房产交易中心</div>
+                <div class="groundSituation-ending">2020年1月20日</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- 备注弹窗 -->
+      <div class="announcement-popup">
+        <div class="popup-title">
+          <div class="public-titel-word">备注</div>
+        </div>
+        <div class="popup-content" id="houseremarkId">
+
+        </div>
+      </div>
+
+
+
+      <!-- 隐藏导航栏 -->
+      <!-- 网站底部 -->
+      <#include "../../cms/public/footerwap.html">
+
+    </div>
+    <script src="${basePath}/webwap/js/jquery.min.js"></script>
+    <script src="${basePath}/webwap/js/common.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        $('.announcement-popup').hide();
+        $('.popup-close').click(function () {
+          $('.announcement-popup').hide();
+        });
+        $('.shell-title').click(function () {
+          $('.announcement-popup').show();
+        });
+      });
+
+      /**
+       *获取备注
+       * @param url
+       * @returns 
+       */
+      function gethouseremark(url) {
+        $.ajax({
+          url: basePath + "/web/remarkwebhtml",
+          type: "POST",
+          data: { "url": url },
+          dataType: "json", //指定服务器返回的数据类型
+          success: function (r) {
+
+            if (r.code == 0) {
+              if (r.remarthtml == null || r.remarthtml == "" || r.remarthtml == undefined) {
+                $("#houseremarkId").html('<div style="font-size:1.8rem;text-align:center">未填写</div>');
+              } else {houseremarkId
+
+                $("#houseremarkId").html(r.remarthtml);
+              }
+            }
+
+          }
+        });
+      }
+    </script>
+</body>
+
+</html>

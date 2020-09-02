@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交易公告</title>
+  <link rel="stylesheet" href="${basePath}/webwap/css/mui.min.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/notice.css">
+
+</head>
+<script>
+  var basePath = "${basePath}";
+  var threeAgoDate = "${threeAgoDate}"
+  var tatol = ${ notices.tatol!};
+  var pageSize = ${ notices.pageSize!};
+  var total_page = Math.ceil(tatol / pageSize);
+  var params = { "total_page": total_page, "tatol": ${ notices.tatol!}, "currentPage": ${ notices.currentPage! }, "pageSize": ${ notices.pageSize! }};
+</script>
+
+<body>
+
+  <#include "/webwap/common/header.html">
+
+
+    <div class="content-core">
+      <div class="public-titel">
+        <div class="public-titel-word">交易公告</div>
+      </div>
+
+    </div>
+    <div style="height:calc(100% - 9rem);position:relative">
+      <div class="mui-content mui-scroll-wrapper droploader">
+
+
+        <div class="mui-scroll">
+          <!--数据列表-->
+          <ul class=" mui-table-view-chevron nature-card result-list" id="house">
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 隐藏导航栏 -->
+    <!-- 网站底部 -->
+    <#include "../../cms/public/footerwap.html">
+
+      <script src="${basePath}/webwap/js/jquery.min.js"></script>
+      <script src="${basePath}/webwap/js/common.js"></script>
+      <script src="${basePath}/webwap/js/mui.min.js"></script>
+      <script src="${basePath}/webwap/js/tradingnoticelist.js"></script>
+
+
+</body>
+
+</html>

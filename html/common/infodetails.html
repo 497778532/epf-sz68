@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息详情</title>
+    <base id="basePath" href="${basePath}">
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/resultDetails.css">
+</head>
+<body>
+    <div class="resultDetails">
+        <!-- 头部 -->
+		<#include "header.html">
+        <div class="content-core" style="min-height:70rem">
+            <div class="resultDetails-content">
+                <div class="resultDetails-title">${info.title!}</div>
+                <div class="resultDetails-init">
+                    <div>
+                     ${info.content!}
+                    </div>
+                    <div class="ending" style="margin-top: 2rem;">${info.fromWhere!}</div>
+                    <div class="ending">${info.pubTime?string('yyyy-MM-dd')}</div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- 隐藏导航栏 -->
+        <!-- 网站底部 -->
+        <#include "../../cms/public/footerwap.html">
+    </div>
+</body>
+	<script src="${basePath}/webwap/js/jquery.min.js"></script>
+    <script src="${basePath}/webwap/js/common.js"></script>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>看标的日程安排</title>
+  <link rel="stylesheet" href="${basePath}/webwap/css/mui.min.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/schedule.css">
+
+  <script>
+    var basePath = "${basePath}";
+    var tatol = ${ transTargetCalendar.tatol!};
+    var pageSize = ${ transTargetCalendar.pageSize!};
+    var total_page = Math.ceil(tatol / pageSize);
+    var params = { total_page: total_page, "tatol": tatol, "currentPage": ${ transTargetCalendar.currentPage!}, "pageSize": pageSize};
+  </script>
+</head>
+
+<body>
+
+  <!-- 头部 -->
+  <#include "/webwap/common/header.html">
+
+    <div class="content-core">
+      <div class="public-titel">
+        <div class="public-titel-word">看标的日程安排</div>
+      </div>
+      <div class="inquire">
+        <div class="inquire-title">
+          <div>标的物</div>
+          <div class="inquire-search">
+            <img src="${basePath}/webwap/images/icon_search.png" alt="">
+            <input type="text" placeholder="请输入关键词" id="land_no">
+          </div>
+          <div onclick="search();">
+            查询
+          </div>
+          <!-- <div onclick="resetsearch();">
+                       		 重置
+                    </div> -->
+        </div>
+        <div class="inquire-area">
+          <div>区域:</div>
+          <#list sysAreas as area>
+            <div>
+              <input name="land_area" value="${area.name!}" type="checkbox" onclick="search();">
+              <span>${area.name!}</span>
+            </div>
+          </#list>
+        </div>
+        <div class="inquire-hint">
+          <span class="hint-warm">温馨提示：</span>
+          每个地点的标的物现场参观时间一般为10分钟。<span class="hint-give">注明无钥匙 的均无法进入室内</span>
+          ，不便之处敬请谅解。如果现场看样，请至少提前两
+          天预约 ，如无人预约则取消本次看样。咨询电话（限工作时间）：
+          83755237，投诉电话：23934633
+        </div>
+      </div>
+    </div>
+
+
+    <div style="height:calc(100% - 9rem);position:relative">
+      <div class="mui-content mui-scroll-wrapper droploader">
+
+
+        <div class="mui-scroll">
+          <!--数据列表-->
+          <ul class=" mui-table-view-chevron nature-card result-list" id="house">
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- 分页 -->
+
+
+    <!-- 隐藏导航栏 -->
+    <!-- 网站底部 -->
+    <#include "../../cms/public/footerwap.html">
+      </div>
+      <script src="${basePath}/webwap/js/jquery.min.js"></script>
+      <script src="${basePath}/webwap/js/common.js"></script>
+      <script src="${basePath}/webwap/js/mui.min.js"></script>
+      <script src="${basePath}/webwap/js/schedulelist.js"></script>
+</body>
+
+</html>

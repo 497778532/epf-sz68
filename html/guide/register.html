@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上注册</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/register.css">
+</head>
+
+<body>
+    <div class="page-epf register">
+        <!-- 头部 -->
+<#include "/webwap/common/header.html">
+        <div class="content-core">
+            <div class="public-titel">
+                <div class="public-titel-word">网上注册</div>
+            </div>
+            <div class="register-content">
+                <div class="procedure">
+                    <div class="procedure-init">1、访问首页点击注册按钮，如下图所示:</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp1.png" alt=""></div>
+                    <div class="procedure-init">2、竞买人可选择"个人竞买类"、"企业竞买类"及"联合 竞买类"，并按要求注册。</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp2.png" alt=""></div>
+                    <div class="procedure-init">3、输入信息后请勾选“我已阅读并同意《注册协议》”。</div>
+                    <div class="procedure-init">按要求填写注册资料，填写完毕后点击"下一步"按钮，直到完成注册。请如实上传注册所需各类电子tp，避免竞买风险。</div>
+                    <div class="procedure-init">4、完成注册的客户，输入注册账号和密码登录网上交易系统。（推荐使用谷歌(chrome)、Edge等浏览器）</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp3.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+<#include "../../cms/public/footerwap.html">
+        <!-- 隐藏导航栏 -->
+    </div>
+</body>
+<script src="${basePath}/webwap/js/jquery.min.js"></script>
+      <script src="${basePath}/webwap/js/mui.min.js"></script>
+      <script src="${basePath}/webwap/js/common.js"></script>
+</html>

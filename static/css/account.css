@@ -1,0 +1,181 @@
+.account{
+    overflow: hidden;
+}
+.content-core{
+    overflow: hidden;
+}
+.trading-title{
+    overflow: hidden;
+    padding: 1.6rem 0;
+    background: #f6f6f6
+}
+.trading-title-ul{
+    width:20rem;
+    height:3.3rem;
+    border:1px solid rgba(195,195,195,1);
+    border-radius:.4rem;
+    margin: auto;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.trading-title-ul>li{
+    float: left;
+    width: 50%;
+    color:rgba(51,51,51,1);
+    font-size: 1.6rem;
+    text-align: center;
+    height:3.4rem;
+    line-height: 3.2rem;
+}
+.trading-title-active{
+    background: #008CD6FF !important;
+    color:#ffffff !important;
+}
+
+.basic{
+    padding: 0 1.2rem 2.4rem 1.2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #f6f6f6;
+    
+}
+.enterprise{
+    display: none;
+}
+.basic-init{
+    overflow: hidden;
+    border-radius: .6rem;
+    box-shadow:0px .3rem .9rem 0 rgba(170,170,170,0.2);
+}
+.basic-item{
+    height: 4.3rem;
+    line-height: 4.3rem;
+    background: #fff;
+    color: #333333FF;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    padding: 0 1.2rem;
+    border-bottom: 1px solid #DDDDDDFF;
+    overflow: hidden;
+}
+.basic-init>.basic-item:last-child{
+    border: 0 !important;
+}
+.basic-item>div:first-child{
+    float: left;
+}
+.basic-item>div:nth-child(2){
+    float: right;
+}
+.change{
+    margin-top: 1.2rem;
+}
+.whether input{
+    vertical-align: middle;
+    width: 1.6rem;
+    height: 1.6rem;
+}
+.whether span{
+    vertical-align: middle;
+}
+.whether>label:nth-child(n+2){
+    margin-left: 1.6rem;
+}
+.basic-item-init input{
+    border: 0;
+    text-align: right;
+    height: 2.4rem;
+}
+.basic-item-init input::-webkit-input-placeholder{
+    color: #999999FF;
+}
+.basic-item-yzm input{
+    width: 9rem;
+}
+.basic-item-yzm button{
+    border: 0;
+    width:7rem;
+    height:2.4rem;
+    background:rgba(0,140,214,1);
+    border-radius:1.1rem;
+    display: inline-block;
+    text-align: center;
+    line-height: 2.4rem;
+    color: #fff;
+    font-size: 1.1rem !important;
+}
+.basic-item-init,.unite{
+    display: none;
+}
+.save{
+    width:100%;
+    height:4.4rem;
+    line-height: 4.4rem;
+    background:rgba(0,140,214,1);
+    border-radius:2.2rem;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #fff;
+    margin-top: 3rem;
+    display: none;
+}
+
+.unite-btn button{
+    border: 0;
+    width: 9.3rem;
+    height: 2.4rem;
+    background: rgba(0,140,214,1);
+    border-radius: 1.1rem;
+    display: inline-block;
+    text-align: center;
+    line-height: 2.4rem;
+    color: #fff;
+    font-size: 1.3rem !important;
+}
+.unite-btn button:nth-child(n+2){
+    margin-left: .8rem;
+}
+.basic-init2{
+    margin-top: 1.2rem;
+}
+
+.accessory-person{
+    padding: 2rem 1.2rem;
+}
+.person-btn button{
+    border: 0;
+    width: 9.3rem;
+    height: 3.2rem;
+    background: #D8D8D8FF;
+    border-radius: 1.6rem;
+    display: inline-block;
+    text-align: center;
+    line-height: 2.4rem;
+    color: #fff;
+    font-size: 1.3rem !important;
+}
+.person-btn button:nth-child(n+2){
+    margin-left: .8rem;
+}
+.person-active{
+    background: rgba(0,140,214,1) !important;
+}
+.person-content{
+    overflow: hidden;
+    font-size: 1.4rem;
+    color: #333333FF;
+    margin-top: 1.2rem;
+}
+.person-content>div{
+    margin-top: 2rem;
+}
+.accessory-firm{
+    padding: 0 1.2rem;
+    display: none;
+}
+.accessory-firm a{
+    display: block;
+    color: #333333FF;
+    font-size: 1.4rem;
+    margin-top: 2rem;
+}

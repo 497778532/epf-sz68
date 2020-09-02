@@ -1,0 +1,60 @@
+
+.mui-scroll-wrapper {
+	
+}
+html,body {
+	height:100%
+}
+.result{
+    background: #f4f4f4;
+    overflow: hidden;
+}
+.public-titel{
+    background: #fff;
+}
+.result-list {
+    overflow: hidden;
+    background-color:#F6F6F6
+}
+
+.result-list .result-item {
+    width: 100%;
+    min-height: 6.4rem;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    margin-top: 1.2rem;
+    box-sizing: border-box;
+    padding: 0 1.2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.result-publicity{
+    overflow: hidden;
+}
+.result-publicity>div:first-child{
+    color: #333333;
+    font-size: 1.4rem;
+    float: left;
+}
+.result-publicity>div:nth-child(n+2){
+    color: #999999;
+    font-size: 1.2rem;
+    float: right;
+}
+.result-leave{
+    
+}
+
+
+.result-leave>a{
+    font-size: 1.5rem;
+    color: #CAC61C;
+}
+.result-leave>a:nth-child(n+2){
+    margin-left: .8rem;
+}
+.notice-text {
+	color:#333333;
+	line-height:2.2rem;
+}

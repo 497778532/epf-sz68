@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/login.css">
+</head>
+
+<body>
+    <div class="page-epf login">
+        <!-- 头部 -->
+		<#include "../webwap/common/header.html">
+        <div class="content-core">
+            <div class="login-from">
+
+                <div class="form" for="exampleInputnumber">
+                    <div class="login-account form-item">
+                        <img src="${basePath}/webwap/images/icon_name.png" alt="">
+                        <input class="login-input" placeholder="请输入用户名" id="account" id="exampleInputnumber" 
+                            placeholder-class="input-placeholder" />
+                    </div>
+                    <div class="login-password form-item">
+                        <img src="${basePath}/webwap/images/icon_password.png" alt="">
+                        <input type="password" class="login-input" placeholder="请输入密码" id="password" id="exampleInputPassword"
+                            placeholder-class="input-placeholder"></input>
+                    </div>
+                    <div class="login-verification form-item">
+                        <img src="${basePath}/webwap/images/icon_code.png" alt="">
+                        <input class="login-input" placeholder="请输入验证码" id="captchaCodeHeader"
+                            placeholder-class="input-placeholder" style="width:calc(100% - 7.2rem)"></input>
+                            <div onclick="refreshCodeHeader()" style="width:5rem"> <img  class="verification" style='width:5rem; ' id="captchaHeader" alt="" src="${basePath}/captcha.jpg" > 
+                    </div>
+                    </div>
+
+                    <div class="login-submit">
+                        <button id="login" >登录</button>
+                    </div>
+                </div>
+                <div class="login-forget">
+                    <div>广东省公共资源交易账号登录</div>
+               <div class="retrieve" onclick="forgetPas()">找回密码</div> 
+                </div>
+            </div>
+
+            <!-- 忘记密码 -->
+            <div class="forgetPassword">
+                <form class="form">
+                    <div class="login-account form-item">
+                        <img src="${basePath}/webwap/images/icon_message.png" alt="">
+                        <input class="login-input" placeholder="注册信息" name="username"
+                            placeholder-class="input-placeholder" />
+                    </div>
+                    <div class="login-phone form-item">
+                        <img src="${basePath}/webwap/images/icon_way.png" alt="">
+                        <input class="login-input" placeholder="请输入手机号码或者电子邮箱" password='true' name="pwd"
+                            placeholder-class="input-placeholder"></input>
+                    </div>
+                    <div class="login-verification form-item">
+                        <img src="${basePath}/webwap/images/icon_code.png" alt="">
+                        <input class="login-input" placeholder="请输入图形验证码" name="code"
+                            placeholder-class="input-placeholder"></input>
+                        <div class="registerVerification">获取验证码</div>
+                    </div>
+                    <div class="login-password form-item">
+                        <img src="${basePath}/webwap/images/icon_password.png" alt="">
+                        <input class="login-input" placeholder="请输入新密码" password='true' name="pwd"
+                            placeholder-class="input-placeholder"></input>
+                    </div>
+                    <div class="login-password form-item">
+                        <img src="${basePath}/webwap/images/icon_password.png" alt="">
+                        <input class="login-input" placeholder="请输入新密码" password='true' name="pwd"
+                            placeholder-class="input-placeholder"></input>
+                    </div>
+                    <div class="login-submit">
+                        <button type='submit' >登录</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 隐藏导航栏 -->
+            
+        </div>
+    </div>
+	<script type="text/javascript">
+		var basePath = "${basePath}";
+		var isWap = 1;
+	</script>
+    <script src="${basePath}/webwap/js/jquery.min.js"></script>
+    <script src="${basePath}/webwap/js/common.js"></script>
+    <script src="${basePath}/tradewebpc/js/jQuery.md5.js"></script>
+    <script src="${basePath}/tradewebpc/js/common.js"></script>
+    <script src="${basePath}/tradewebpc/js/login.js"></script>
+    <script src="${basePath}/tradewebpc/js/cookie.js"></script>
+    <script src="${basePath}/webwap/js/record.js"></script>
+    
+    <script>
+        $(".retrieve").click(function () {
+            $(".login-from").hide();
+            $(".forgetPassword").show();
+        })
+    </script>
+</body>
+
+</html>

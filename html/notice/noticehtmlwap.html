@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+  <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+</head>
+<script>
+
+</script>
+<style>
+body{margin: 0;padding: 0;}
+</style>
+<body class="" onload="IFrameResize()">
+
+   <#if htmlfile?length &gt; 0>
+		${htmlfile!}
+	<#else>
+		<div style="text-align: center;">
+			未找到附件内容！
+		</div>
+	</#if>
+	<script src="${basePath}/webwap/js/jquery.min.js"></script>
+	<script> 
+
+function IFrameResize(){ 
+//alert(this.document.body.scrollHeight); //弹出当前页面的高度 
+var obj = parent.document.getElementById("${iframeid}"); //取得父页面IFrame对象 
+//alert(obj.height); //弹出父页面中IFrame中设置的高度 
+obj.height = this.document.body.scrollHeight+30; //调整父页面中IFrame的高度为此页面的高度 
+} 
+$(function(){
+	       var lables = document.querySelectorAll('table')
+	        var elem = document.createElement('div')
+	             elem.style.overflowX="scroll"
+	        lables.forEach(function (lable,index) {
+		         lable.style.width="170rem"
+	             lable.parentNode.replaceChild(elem, lable)
+	             elem.appendChild(lable)
+	        });
+
+	       $('div').css({"width":"100%","margin":"0","font-size":"1.4rem"})
+	       $('p').css({"font-size":"1.4rem","margin":"0"})
+	       $('span').css({"font-size":"1.4rem"})
+	        
+})
+</script>
+</body>
+</html>

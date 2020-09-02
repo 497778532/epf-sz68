@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>土地详情</title>
+  <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/objectDetails.css">
+  <link rel="stylesheet" href="${basePath}/webwap/css/swiper.min.css">
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="page-epf objectDetails">
+    <!-- 头部 -->
+    <#include "/webwap/common/header.html">
+      <div class="content-core">
+        <!-- 标的详情 -->
+        <div class="subject">
+          <div class="public-titel">
+            <div class="public-titel-word">土地详情</div>
+          </div>
+          <div class="subject-content">
+            <div class="subject-title">
+              <span>宗地：</span>
+              <span>${target.no!}</span>
+            </div>
+            <div class="subject-data">
+              <span>发布日期：</span>
+              <span>${(detail["NOTICE_DATE"]?string('yyyy-MM-dd'))!}</span>
+              <#if target.isStop==1> <span class="thedeal" >已终止</span>
+                <#elseif target.isSuspend==1> <span class="thedeal" >已中止</span>
+                  <#elseif target.status==5> <span class="thedeal trade">${target.targetStatus!}</span>
+                    <#else> <span class="thedeal">${target.targetStatus!}</span>
+              </#if>
+            </div>
+            <div class="subject-img">
+
+              <div class="swiper-container my-bot"
+                style="width: 100%; height: 300px; margin-left: auto; margin-right: auto;">
+                <div class="swiper-wrapper land-image">
+                  <#assign isExist720Map=0 />
+                  <#if targetLandInfoList?? &&(targetLandInfoList?size>0)>
+                    <#list targetLandInfoList as landList>
+                      <#if landList.HAS_720MAP??&&landList.HAS_720MAP==1>
+                        <#assign isExist720Map=1 />
+                        <div class="swiper-slide land-image"
+                          style="background-size: cover; background-position: center;">
+                          <#if "2019-12-1"?date("yyyy-MM-dd") &lt;=(landList.BEGIN_LIMIT_TIME?string("yyyy-MM-dd HH:mm"))?date("yyyy-MM-dd HH:mm")>
+                            <a href="http://720.szhome.com/ltc/${landList.BEGIN_LIMIT_TIME?string('yyyyMM')!}/${landList.TGE_NO!}.html"
+                              target="_blank">
+                              <img
+                                src="http://720.szhome.com/ltc/${landList.BEGIN_LIMIT_TIME?string('yyyyMM')!}/images/${landList.TGE_NO!}.jpg"
+                                alt="" onerror="this.src='${basePath}/tradewebpc/images/zw_tp.jpg'" />
+                            </a>
+                            <#else>
+                              <a href="http://720.szhome.com/ltc/${landList.TGE_NO!}.html" target="_blank">
+                                <img src="http://720.szhome.com/ltc/images/${landList.TGE_NO!}.jpg" alt=""
+                                  onerror="this.src='${basePath}/tradewebpc/images/zw_tp.jpg'" />
+                              </a>
+                          </#if>
+                        </div>
+                      </#if>
+                    </#list>
+                  </#if>
+                  <#if landImgs?? &&(landImgs?size>0)>
+                    <#list landImgs as landImgOne>
+                      <div class="swiper-slide land-image" style="background-size: cover; background-position: center;">
+                        <img onclick="showfullimg(event)" data-index="${landImgOne_index}"
+                          src="${basePath}/web/showing?id=${landImgOne.id !}" alt=""
+                          onerror="this.src='${basePath}/tradewebpc/images/zw_tp.jpg'" />
+                      </div>
+                    </#list>
+                    <#elseif isExist720Map==0>
+                      <div class="swiper-slide land-image" data="0">
+                        <img src="${basePath}/tradewebpc/images/zw_tp.jpg" alt="0">
+                      </div>
+                  </#if>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="subject-list">
+              <div class="subject-item">
+                <span>交易方式：</span>
+                <span>${target.targetType!}</span>
+              </div>
+              <div class="subject-item">
+                <span>交易类型：</span>
+                <span>${target.targetBusinessType!}</span>
+              </div>
+              <#if target.isStop!=1 && target.isSuspend!=1 && (target.status==3 || target.status==4)>
+             <div class="subject-item" style="display:flex">
+                <span id="timename">距${params.phase_name!}结束：</span>
+                <span class="countd">
+						 <ul style="display:flex">
+							<li id="d" class="time">00</li>
+							<li class="info">天</li>
+							<li id="h" class="time">00</li>
+							<li class="info">时</li>
+							<li id="i" class="time">00</li>
+							<li class="info">分</li>
+							<li id="s" class="time">00</li>
+							<li class="info">秒</li>
+						</ul>
+			  </span>
+              </div>
+              </#if>
+              <div class="subject-item">
+                <span>保证金 (元)：</span>
+                <span><#if target.earnestMoney?? && target.earnestMoney !=0>
+			${(target.earnestMoney?string(',###.##'))!'&nbsp;'}</#if></span>
+              </div>
+
+
+              <div class="subject-item">
+                <span>起始价（元）：</span>
+                <span>
+                  <#if target.transType!=2&& target.transType!=9>
+                    <#if detail.BEGIN_PRICE?? && detail.BEGIN_PRICE !=0>
+                      ${(detail["BEGIN_PRICE"]?string(',###.##'))!}</#if>
+                    <#else>
+                      <#if detail.BEGIN_PRICE?? && detail.BEGIN_PRICE !=0>
+                        ${(detail["BEGIN_PRICE"]?string(',###.##'))!}</#if>
+                  </#if>
+                </span>
+              </div>
+              <div class="subject-item">
+                <span>竞价阶梯（元）：</span>
+                <span>
+                  <#if detail.PRICE_STEP?? && detail.PRICE_STEP !=0>
+                    ${(detail["PRICE_STEP"]?string(',###.##'))!}</#if>
+                </span>
+              </div>
+                <#if target.transType==0||target.transType==1||target.transType==3||target.transType==4>
+              <div class="subject-item">
+                <span>当前报价 (元)：</span>
+                <span>
+               
+					<#if params.max_price2?? >
+							<#if params.max_price2?? >
+								${((params.max_price2?number)?string(',###.##'))!'&nbsp;'}
+							</#if>
+							<#if params.max_price??>
+								${((params.max_price?number)?string(',###.##'))!'&nbsp;'}
+							</#if>
+						<#else>
+							<#if params.max_price?? >
+								${((params.max_price?number)?string(',###.##'))!'&nbsp;'}
+							<#else>
+								&nbsp; 
+							</#if>
+						</#if>
+					
+                </span>
+              </div>
+              </#if>
+              <div class="subject-item">
+                <span id="final_price">封顶价 (元)：</span>
+                <span class="moles2">
+                  <#if params.final_price?? && params.final_price !=0>
+					${(paramsfinal_price?string(',###.##'))!''}</#if>
+                </span>
+              </div>
+              <div class="subject-item">
+                <span>竞买人数：</span>
+                <span>
+                  <#if target.status?? &&target.status=6 && params.isOldData?? && params.isOldData="1"> 
+		
+							<#elseif target.status=5 && params.isOldData="1" && (target.transType=2||target.transType=1||target.transType=9)> 
+								多人竞买
+							<#elseif target.status=5 && params.isOldData="1" && target.transType=0> 
+							
+							    <#if detail.BEGIN_PRICE?? && target.transPrice?? && detail.BEGIN_PRICE !=0 &&target.transPrice!=0>
+								    <#if detail.BEGIN_PRICE=target.transPrice>
+								    	一人竞买
+								    <#else> 
+								    	多人竞买
+								    </#if>
+								<#else> 
+							    	
+							    </#if>
+							<#else> 
+								<#if params.license_count??>
+									<#if params.license_count == -1>
+							        -
+									<#elseif params.license_count==0>
+							                  无人竞买
+									<#elseif params.license_count==1>
+									一人竞买
+									<#elseif params.license_count==2>
+									多人竞买
+									</#if>
+								</#if>
+	
+						</#if>
+                </span>
+              </div>
+
+              <#if target.isStop!=1 && target.isSuspend!=1 && target.status==5>
+                <div class="subject-item">
+                  <span>成交价（元）：</span>
+                  <span>
+                    <#if target.transPrice?? && target.transPrice !=0>
+                      ${(target.transPrice?string(',###.##'))!'&nbsp;'}</#if>
+                  </span>
+                </div>
+
+                <div class="subject-item">
+                  <span>
+                    <#if timer.isShowGuaPai=='1'>竞得人：
+                      <#elseif timer.transType=='1'>
+                        竞得人：
+                        <#else>
+                          中标人：
+                    </#if>
+                  </span>
+                  <span>${detail["WINNER"]!'&nbsp;'} </span>
+                </div>
+
+              </#if>
+            </div>
+          </div>
+        </div>
+
+        <!-- 相关附件下载 -->
+        <div class="accessory">
+          <div class="accessory-title">
+            <img src="${basePath}/webwap/images/icon_download.png" alt="">
+            <span>相关附件下载</span>
+          </div>
+          <div class="accessory-download">
+            <#if files??>
+              <#list files as file>
+                <a href="${tradeSystem}/download?module=base&service=BaseDownload&method=downloadFile&lobId=${file.id}">
+                  <img src="${basePath}/tradewebpc/images/doc.png">
+                  <span>${file.dtlfileName!}</span>
+                </a>
+
+              </#list>
+            </#if>
+
+          </div>
+        </div>
+
+        <!-- 公告详情 -->
+        <div class="notice">
+          <div class="public-titel">
+            <div class="public-titel-word">公告详情</div>
+          </div>
+          <#if transNotices?? && transNotices?size &gt; 0>
+            <#list transNotices as ntc>
+              <div style="padding:1.2rem">
+
+                <iframe frameborder="0" scrolling="no" id="externalframe${ntc_index}" src="${basePath}/wap/noticehtml?id=${ntc.id}&iframeid=externalframe${ntc_index}"
+                  class="myIframe"></iframe>
+                <#if transNotices?size &gt; 1>
+                  <div style="width: 100%;border:1px solid;margin:50px 0px;"></div>
+              </div>
+          </#if>
+          </#list>
+
+
+          <#else>
+            <div style="text-align: center">
+              暂无数据
+            </div>
+            </#if>
+
+
+
+            <!-- <div class="notice-content">
+                        <div class="notice-init">
+                            <div class="notice-init-title">深圳市土地使用权出让公告</div>
+                            <div class="notice-init-serial">深土交告〔2020〕3号</div>
+                            <div class="notice-init-core">
+                                      根据有关法律、法规，受深圳市规划和自然资源局南山管理
+                                      局（以下简称市规划和自然资源局南山管理局）委托，深圳市土
+                                      地房产交易中心（以下简称交易中心）在深圳市福田区红荔西路
+                                      8007号土地房产交易大厦（以下简称交易大厦）3楼，以挂牌方
+                                      式公开出让宗地代码为440305005007GB00179等2宗地的使用
+                                      权，公告期自2020年1月20日起至2020年2月9日止，挂牌期自
+                                      2020年2月10日起至2020年2月19日15时止。现予公告。
+                            </div>
+                        </div>
+                        <div class="groundSituation">
+                            <div class="groundSituation-title">一.宗地情况</div>
+                            <div class="groundSituation-item">
+                                <div class="groundSituation-number">
+                                    <span class="groundSituation-left">宗地号：</span>
+                                    <span class="groundSituation-right">440305005007GB00179</span>
+                                </div>
+                                <div class="groundSituation-both">
+                                    <div>
+                                        <span class="groundSituation-left">宗地号：</span>
+                                        <span class="groundSituation-right">T179</span>
+                                    </div>
+                                    <div>
+                                        <span class="groundSituation-left">土地位置：</span>
+                                        <span class="groundSituation-right">南山区粤海街道</span>
+                                    </div>
+                                </div>
+                                <div class="groundSituation-both">
+                                    <div>
+                                        <span class="groundSituation-left">土地用途：</span>
+                                        <span class="groundSituation-right">商业用地</span>
+                                    </div>
+                                    <div>
+                                        <span class="groundSituation-left">土地面积(㎡)：</span>
+                                        <span class="groundSituation-right">3021.15</span>
+                                    </div>
+                                </div>
+                                <div class="groundSituation-number" style="line-height:1.6rem;margin-top:.2rem">
+                                    <span class="groundSituation-left">准入行业类别：</span>
+                                    <span class="groundSituation-right">A0506数字、动漫、设计、制作服务、数字文化技术创新服务</span>
+                                </div>
+                                <div class="groundSituation-both">
+                                    <div>
+                                        <span class="groundSituation-left">建筑面积(㎡)：</span>
+                                        <span class="groundSituation-right">45000</span>
+                                    </div>
+                                    <div>
+                                        <span class="groundSituation-left">土地使用年限(㎡)：</span>
+                                        <span class="groundSituation-right">30</span>
+                                    </div>
+                                </div>
+                                <div class="groundSituation-number">
+                                    <span class="groundSituation-left">挂牌起始价(人民币、万元)：</span>
+                                    <span class="groundSituation-right">97400</span>
+                                </div>
+                                <div class="groundSituation-number">
+                                    <span class="groundSituation-left">竞买(投标)保证金(人民币、万元)：</span>
+                                    <span class="groundSituation-right">19480</span>
+                                </div>
+                            </div>
+                            <div class="groundSituation-item">
+                                <div class="groundSituation-number">
+                                    <span class="groundSituation-left">宗地号：</span>
+                                    <span class="groundSituation-right">440305005007GB00179</span>
+                                </div>
+                                <div class="groundSituation-both">
+                                    <div>
+                                        <span class="groundSituation-left">宗地号：</span>
+                                        <span class="groundSituation-right">T179</span>
+                                    </div>
+                                    <div>
+                                        <span class="groundSituation-left">土地位置：</span>
+                                        <span class="groundSituation-right">南山区粤海街道</span>
+                                    </div>
+                                </div>
+                                <div class="groundSituation-both">
+                                    <div>
+                                        <span class="groundSituation-left">土地用途：</span>
+                                        <span class="groundSituation-right">商业用地</span>
+                                    </div>
+                                    <div>
+                                        <span class="groundSituation-left">土地面积(㎡)：</span>
+                                        <span class="groundSituation-right">3021.15</span>
+                                    </div>
+                                </div>
+                                <div class="groundSituation-number" style="line-height:1.6rem;margin-top:.2rem">
+                                    <span class="groundSituation-left">准入行业类别：</span>
+                                    <span class="groundSituation-right">A0506数字、动漫、设计、制作服务、数字文化技术创新服务</span>
+                                </div>
+                                <div class="groundSituation-both">
+                                    <div>
+                                        <span class="groundSituation-left">建筑面积(㎡)：</span>
+                                        <span class="groundSituation-right">45000</span>
+                                    </div>
+                                    <div>
+                                        <span class="groundSituation-left">土地使用年限(㎡)：</span>
+                                        <span class="groundSituation-right">30</span>
+                                    </div>
+                                </div>
+                                <div class="groundSituation-number">
+                                    <span class="groundSituation-left">挂牌起始价(人民币、万元)：</span>
+                                    <span class="groundSituation-right">97400</span>
+                                </div>
+                                <div class="groundSituation-number">
+                                    <span class="groundSituation-left">竞买(投标)保证金(人民币、万元)：</span>
+                                    <span class="groundSituation-right">19480</span>
+                                </div>
+                            </div>
+                            <div class="notice-init-core2">
+                                上述宗地的具体情况以《深圳市土地使用权出让合同书》（样本，以下简称《出让合同》）为准。
+                            </div>
+                        </div>
+
+                        <div class="groundSituation-strip">
+                            <div class="groundSituation-title">二.宗地出让条件</div>
+                            <div class="groundSituation-strip-content">
+                                <div>
+                                    （一）竞得人须在成交后即时签订《成交确认书》，与深圳市南
+                                    山区工业和信息化局（以下简称南山区工业和信息化局）签订
+                                    《总部项目产业发展监管协议》，并与市规划和自然资源局南山
+                                    管理局签订《出让合同》。
+                                </div>
+                                <div>
+                                    （二）签订《出让合同》时，竞得人可选择5个工作日内一次性付
+                                    款或分期付款。选择分期付款的，竞得人应自签订出让合同起15
+                                    个工作日内首付50%，余款1年内不计利息付清。
+                                </div>
+                                <div>
+                                    （三）竞得人应遵守法律、法规和《出让合同》规定，严格按照
+                                    土地用途和有关部门审定的规划设计方案使用和开发建设。
+                                </div>
+                            </div>
+                        </div>
+                        <div class="groundSituation-strip">
+                            <div class="groundSituation-title">三.竞买人主体资格要求</div>
+                            <div class="groundSituation-strip-content">
+                                <div>
+                                    具备下列条件的，可申请竞买（不接受联合竞买）本次出让宗地：
+                                </div>
+                                <div>
+                                    （一）竞买申请人应为根据《深圳市鼓励总部企业发展实施办法》
+                                    （深府规〔2017〕7号）核定的总部企业，且在深圳市未拥有总
+                                    部用地；
+                                </div>
+                                <div>
+                                    （二）竞买申请人应为符合《深圳市总部项目遴选及用地供应管
+                                    理办法》（深府规〔2018〕1号）遴选要求的企业。
+                                </div>
+                                <div style="margin-top: .6rem;">
+                                    市规划和自然资源局南山管理局地址：深圳市南山区深南大道
+                                    10138号；咨询电话：（0755）26978448。
+                                </div>
+                                <div>
+                                    南山区工业和信息化局地址：深圳市南山区桃园路南山区委大楼
+                                    A座8楼；咨询电话：（0755）26563896。
+                                </div>
+                                <div>
+                                    交易中心地址：深圳市福田区红荔西路8007号土地房产交易大厦
+                                </div>
+                                <div>
+                                    3楼；咨询电话：（0755）83785995；
+                                </div>
+                                <div>
+                                    网址： http://www.sz68.com 。
+                                </div>
+                                <div class="groundSituation-ending" style="margin-top: .6rem;">深圳市土地房产交易中心</div>
+                                <div class="groundSituation-ending">2020年1月20日</div>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+            <li style="margin: 20px auto; width: 1000px;">
+              <!-- <#if transNotices?? && transNotices?size &gt; 0>
+              <#list transNotices as ntc>
+                <iframe frameborder="0" scrolling="no" id="externalframe${ntc_index}" class="hahahaha"
+                  src="${basePath}/web/noticehtml?id=${ntc.id}&iframeid=externalframe${ntc_index}"
+                  style="width:100%;"></iframe>
+                <#if transNotices?size &gt; 1>
+                  <div style="width: 100%;border:1px solid;margin:50px 0px;"></div>
+                </#if>
+              </#list>
+
+
+              <#else>
+                <div style="text-align: center;width:850;margin-top:40px">
+                  <img src="${basePath}/tradewebpc/images/img_default3.png" alt="">
+                </div>
+            </#if> -->
+
+            </li>
+        </div>
+
+        <!-- 标的详情 -->
+        <div class="object">
+          <div class="public-titel">
+            <div class="public-titel-word">标的详情</div>
+          </div>
+
+          <#if targetLandInfoList?? &&(targetLandInfoList?size>0)>
+            <#list targetLandInfoList as landList>
+              <#if landList["IS_MAIN_GOODS"]==1||landList["IS_MAIN_GOODS"]==0>
+                <div class="object-content">
+                  <div class="object-item">
+                    <div>
+                      <span>宗地号：</span>
+                      <span>${landList["TGE_NO"]!}</span>
+                    </div>
+                    <div>
+                      <span>用途：</span>
+                      <span>${landList["GOODS_USE"]!}</span>
+                    </div>
+                  </div>
+                  <div class="object-item">
+                    <div>
+                      <span>
+                        土地面积：
+                      </span>
+                      <span>
+
+                        <#if landList["GOODS_SIZE"]??>
+                          ${((landList["GOODS_SIZE"]?number)?string(',###.##'))!}㎡
+                          <#else>
+                            /
+                        </#if>
+
+
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        使用年限：
+                      </span>
+                      <span>
+
+                        <#if landList["USE_AGE"]??>
+                          ${landList["USE_AGE"]!}年
+                          <#else>
+                            /
+                        </#if>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="object-item">
+                    <div>
+                      <span>建筑面积：</span>
+                      <span>
+                        <#if landList["ALLAREA_REMARK"]??>
+                          ${landList["ALLAREA_REMARK"]}㎡
+                          <#elseif landList["AREA_SIZE"]??>
+                            ${((landList["AREA_SIZE"]?number)?string(',###.##'))!}㎡
+                            <#elseif landList["ALLAREA"]??>
+                              ${((landList["ALLAREA"]?number)?string(',###.##'))!}㎡
+                              <#else>
+                                /
+                        </#if>
+                      </span>
+                    </div>
+                    <div>
+                      <span>区域：</span>
+                      <span>${landList["CANTON_AREA"]!}</span>
+                    </div>
+                  </div>
+                  <div class="object-item">
+                    <div>
+                      <span>容积率：</span>
+                      <span>
+                        <#if landList["AREA_CUBE_REMARK"]??>
+                          ${landList["AREA_CUBE_REMARK"]!}
+                          <#elseif landList["CUBAGE_SIGN"]??>
+                            ${landList["CUBAGE_SIGN"]!}${landList["CUBAGE"]!}
+                            <#else>
+                              /
+                        </#if>
+                      </span>
+                    </div>
+                    <div>
+                      <span>位置：</span>
+                      <span>${landList["ADDRESS"]!}</span>
+                    </div>
+                  </div>
+                  <div class="object-item">
+                    <div>
+                      <span>建筑覆盖率：</span>
+                      <span>
+                        <#if landList["OVERCAST_PERCENT_SYMBOL"]??>
+                          ${landList["OVERCAST_PERCENT_SYMBOL"]!}${landList["OVERCAST_PERCENT"]!}
+                          <#else>
+                            /
+                        </#if>
+
+                      </span>
+                    </div>
+                    <div>
+                      <span>绿地率：</span>
+                      <span>
+                        <#if landList["GREEN_PERCENT_SYMBOL"]??>
+                          ${landList["GREEN_PERCENT_SYMBOL"]!}${landList["GREEN_PERCENT"]!}
+                          <#else>
+                            /
+                        </#if>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="object-item">
+                    <div>
+                      <span>建筑高度：</span>
+                      <span>
+                        <#if landList["BUILDING_HIGH_SYMBOL"]??>
+                          ${landList["BUILDING_HIGH_SYMBOL"]!}${landList["BUILDING_HIGH"]!}<#if
+                            landList["BUILDING_HIGH"]??>米</#if>
+                          <#else>
+                            /
+                        </#if>
+
+                      </span>
+                    </div>
+                    <div>
+                      <span>建筑楼层：</span>
+                      <span>
+                        <#if landList["BUILDING_FLOOR_SYMBOL"]??>
+                          ${landList["BUILDING_FLOOR_SYMBOL"]!}${landList["BUILDING_FLOOR"]!}
+                          <#else>
+                            /
+                        </#if>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </#if>
+            </#list>
+          </#if>
+
+        </div>
+
+
+
+        <!-- 竞地价记录 -->
+        <#if timer.transType=='4' || timer.transType=='0' || timer.transType=='3' || timer.transType=='5'>
+          <div class="priceLot">
+            <div class="public-titel">
+              <div class="public-titel-word">
+                竞地价记录
+              </div>
+            </div>
+            <li class="tragettabli">
+              <div class="conomy" id="BidRecordtabel">
+
+              </div>
+              <div class="paging" style="display: none;">
+                <div class="paging-core">
+                  <ul class="pagination" id="page1">
+                  </ul>
+                  <div class="pageJump">
+                    <span>跳转到</span>
+                    <input type="text" />
+                    <span>页</span>
+                    <button type="button" class="button">确定</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+        </#if>
+
+
+        <#if target.doubleCompetition==1 && timer.transType!='1' && timer.transType!='2'>
+          <!-- 竞面积记录 -->
+          <div class="priceLot">
+            <#if params.double_trade_config??>
+              <div class="public-titel">
+                <div class="public-titel-word">
+
+                  ${params.double_trade_config.param_name!}记录
+
+                </div>
+              </div>
+            </#if>
+            <li class="tragettabli">
+              <div class="conomy" id="areaRecordtabel">
+                <!-- <table class="conomy_table" >
+            
+                </table> -->
+
+                <!-- 分页 -->
+
+
+              </div>
+              <div class="paging" style="display: none;">
+                <div class="paging-core">
+                  <ul class="pagination" id="page2">
+                  </ul>
+                  <div class="pageJump">
+                    <span>跳转到</span>
+                    <input type="text" />
+                    <span>页</span>
+                    <button type="button" class="button">确定</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </#if>
+
+
+        <!-- 结果公示 -->
+        <div class="result">
+          <div class="public-titel">
+            <div class="public-titel-word">结果公示</div>
+          </div>
+
+
+          <li class="tragettabli">
+
+
+            <div class="result-content" id="results">
+
+            </div>
+          </li>
+        </div>
+
+        <!-- 竞买流程 -->
+        <#if timer.transType=='2' ||timer.transType=='9'>
+          <div class="process">
+            <div class="public-titel">
+              <div class="public-titel-word">招投标流程</div>
+            </div>
+            <div class="process-content">
+              <img src="${basePath}/tradewebpc/images/lc_ztb.png" alt="">
+            </div>
+          </div>
+          <#else>
+            <div class="process">
+              <div class="public-titel">
+                <div class="public-titel-word">竞买流程</div>
+              </div>
+              <div class="process-content">
+                <img src="${basePath}/webwap/images/lct.png" alt="">
+              </div>
+            </div>
+        </#if>
+
+      </div>
+      <!-- 隐藏导航栏 -->
+      <!-- 网站底部 -->
+      <#include "../../cms/public/footerwap.html">
+
+  </div>
+  <script type="text/javascript">
+    var basePath = "/tiaim";
+    var isWap = 0;
+  </script>
+
+
+  <script src="${basePath}/webwap/js/mui.min.js"></script>
+  <script src="${basePath}/webwap/js/swiper.min.js"></script>
+  <script src="${basePath}/webwap/js/common.js"></script>
+
+  <script src="${basePath}/webwap/js/land-list.js"></script>
+  <script src="${basePath}/tradewebpc/js/details.js"></script>
+  <script src="${basePath}/webwap/js/landdetails.js"></script>
+
+  <script>
+
+    var tradeconfig = JSON.parse('${params.double_trade_configstr!'{}'}');
+
+    var businessType = "${target.businessType!}";
+    var targetNo = "${target.no!}";
+    var batchId = "${batch!}";
+    var targetId = "${id!}";
+    var status = "${target.status!}";
+
+    var isStop = "${target.isStop!}";
+    var isSuspend = "${target.isSuspend!}";
+    var transType = "${target.transType!}";
+    //竞价开始和结束时间
+    var biddingBeginTime = "${(target.beginApplyTime?string('yyyy/MM/dd HH:mm'))!}";
+    var biddingEndTime = "${(target.endApplyTime?string('yyyy/MM/dd HH:mm'))!}";
+
+    var gongaoMargindate = "${(target.endEarnestTime?string('yyyy/MM/dd HH:mm'))!}";
+
+    //挂牌开始时间
+    var beginFocusTime = "${(target.beginFocusTime?string('yyyy/MM/dd HH:mm'))!}";
+    //挂牌结束时间
+    var endFocusTime = "${(target.endFocusTime?string('yyyy/MM/dd HH:mm'))!}";
+    //网上报价开始时间和网上报价结束时间
+    var beginLimitTime = "${target.beginLimitTime!}";
+
+    var endTransTime = "${(target.endTransTime?string('yyyy/MM/dd HH:mm'))!}";
+
+    var currentTime = "${currentdate?string('yyyy/MM/dd HH:mm:ss')}";
+    var nowTime = new Date(currentTime).getTime();
+    //TARGET.TRANS_TYPE,null,'无','0','挂牌','1','拍卖','2','招标(公开招标)','3','挂牌(一次竞价)','4','网络竞价','9','邀请招标') as TRANS_TYPE2,
+    var etime = "${params.phase_end_time!}";
+
+    var btime = "${params.phase_begin_time!}";
+    var phare = "${params.phase!}";
+    var started = 0;
+
+    var landDetailOffers = [];//竟地价记录
+    var landDetailOfferCount = '0';
+    var landDetailOffers2 = [];//竞 *** 记录，双竞记录
+    var landDetailOfferCount2 = '0';
+    var landDetailIntervalTime = 1000;//定时刷新时间
+    $(function () {
+
+    	//当前阶段索引，0公告期，1挂牌期，2网上报价期，3现场竞价期，4限时竞价期，5交易结束，6投标期，7现场开标
+		if(phare == "0"||phare == "1"||phare == "2"||phare == "4"||phare == "6"){
+			document.getElementById('timename').innerHTML = "距结束：";
+			countdown();
+		}else if(phare=="3" || phare=="7"){
+
+			document.getElementById('timename').innerHTML = "已开始：";
+			started =nowTime - new Date(btime).getTime();
+			countup();
+
+		}
+		if(phare == '5'){//交易中的标的才时时获取竞价记录
+			jingjiajilu();
+		}else {//其他情况 调用 一次即可
+			setInterval(function(){
+				jingjiajilu()
+			},landDetailIntervalTime);
+		}
+		
+      showareaRecord(targetId)
+      showLandBidRecord(targetId)
+      resultnoticedetail(targetId)
+    });
+
+
+
+
+
+
+
+
+    /** resultnoticedetail(targetNo)
+    * 获取日期的年月日字符串：yyyy-MM-dd
+    * @param {Object} dateObj
+    */
+    function getYearMonthDayStr(dateObj) {
+      var year = dateObj.getFullYear();
+      var month = dateObj.getMonth() + 1;
+      var day = dateObj.getDate();
+      var hours = dateObj.getHours();
+      var minutes = dateObj.getMinutes();
+      var seconds = dateObj.getSeconds();
+      if (month < 10) {
+        month = "0" + month;
+      }
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (hours < 10) {
+        hours = "0" + hours
+      }
+      if (minutes < 10) {
+        minutes = "0" + minutes
+      }
+      if (seconds < 10) {
+        seconds = "0" + seconds
+      }
+      var nowDateStr = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+      return nowDateStr.replace(/-/g, "/");
+    }
+    /**
+    * 获取两个时间相差的小时数
+    * @param {Object} bigDate
+    * @param {Object} smallDate
+    */
+    function countDays(bigDate, smallDate) {
+
+      var rst = (bigDate.getTime() - smallDate.getTime()) / (1000 * 60 * 60 * 24);
+
+      if (parseInt(rst) <= 0) {
+        rst = 0.1;
+      }
+      return rst;
+    }
+    function countHours(bigDate, smallDate) {
+
+      var rst = (bigDate.getTime() - smallDate.getTime()) / (1000 * 60 * 60);
+
+      if (parseInt(rst) <= 0) {
+        rst = 0.1;
+      }
+      return rst;
+    }
+    function countMunites(bigDate, smallDate) {
+
+      var rst = (bigDate.getTime() - smallDate.getTime()) / (1000 * 60);
+
+      if (parseInt(rst) <= 0) {
+        rst = 0.1;
+      }
+      return rst;
+    }
+
+    /**
+    * 拼接时间轴的格子数量
+    * @param {Object} days
+    * @param {Object} simple
+    */
+    function getSpanStr(days, simple) {
+      var spanStr = "";
+      for (var i = 0; i < days; i++) {
+        spanStr += "<span style='margin-left:" + simple + "px'></span>";
+      }
+      return spanStr;
+    }
+
+    /*****************************************************************************************************************/
+
+    function showfullimg(event) {
+      var index = event.target.getAttribute("data-index")
+      $(".back").css("display", "block");
+      var galleryTop = new Swiper('.fullviews', {
+        initialSlide: index,
+        spaceBetween: 0,
+        navigation: {
+          nextEl: '.swp1rt1',
+          prevEl: '.swplft11',
+        },
+
+      });
+    }
+    function canclePrew() {
+      $(".back").css("display", "none");
+    }
+    var galleryThumbs = new Swiper('.gallery-thumbs', {
+      spaceBetween: 0,
+      slidesPerView: 2,
+      freeMode: true,
+      watchSlidesVisibility: true,
+      watchSlidesProgress: true,
+
+    });
+    var galleryTop = new Swiper('.gallery-top', {
+      spaceBetween: 0,
+      navigation: {
+        nextEl: '.swp1',
+        prevEl: '.swp12',
+      },
+      thumbs: {
+        swiper: galleryThumbs
+      }
+    });
+
+    function jingjiajilu() {//刷新竞价记录
+		var recordst=0;
+		$.ajaxSettings.async = false;//同步请求
+		$.post(basePath + "/web/landrecord?t=" + $.now(),
+				{"id" : "${id}"},
+				function(r) {
+					if (r.code == 0) {
+						// console.log("params",r.params);
+						//是否双标
+						if(r.params.double_competition==1){
+							if(r.params.offers2 !=null && typeof(r.params.offers2) != 'undefined'){
+								landDetailOffers2=r.params.offers2;
+							}
+							if(r.params.offer_count2 !=null && typeof(r.params.offer_count2) != 'undefined'){
+								landDetailOfferCount2=r.params.offer_count2;
+							}
+							// appendlandHtml($("#BidRecordtabel"), landDetailOffers2,landDetailOfferCount2);
+							if(r.params.phase==3 || r.params.phase==4 || r.params.phase==7){
+								if(r.params.max_price2!=null){//当前价
+									// document.getElementById('newprice').innerHTML=r.params.max_price2;
+									$('#newprice').next('.moles').html(commafy(r.params.max_price2));
+
+								}else{
+									// document.getElementById('newprice').innerHTML=r.params.max_price;
+									$('#newprice').next('.moles').html(commafy(r.params.max_price));
+									$('#final_price').next('.moles2').html(commafy(r.params.final_price));
+								}
+							}
+						}
+
+						if(r.params.offers !=null && typeof(r.params.offers) != 'undefined'){
+							landDetailOffers=r.params.offers;
+						}
+						if(r.params.offer_count !=null && typeof(r.params.offer_count) != 'undefined'){
+							landDetailOfferCount=r.params.offer_count;
+						}
+						// appendlandHtml($("#BidRecordtabel"), landDetailOffers,landDetailOfferCount);
+						// document.getElementById('newprice').innerHTML=r.params.max_price;//当前价
+						$('#newprice').next('.moles').html(commafy(r.params.max_price));
+						$('#final_price').next('.moles2').html(commafy(r.params.final_price));
+						var isOldData="${params.isOldData!}";
+						if(isOldData=="1"){
+						}else{
+							$('#bidderNumber').next('.moles2').html(bidderNumberStr(r.params.license_count));
+						}
+
+
+						//刷新倒计时
+						var cur_phase=r.params.phase
+
+						// console.log("phase",phare);
+						// console.log("cur_phase",cur_phase);
+						if(cur_phase != phare){
+							if(cur_phase =='5'){//交易结束
+								phare=cur_phase;
+								window.location.reload();
+							}
+							//当前阶段索引，0公告期，1挂牌期，2网上报价期，3现场竞价期，4限时竞价期，5交易结束，6投标期，7现场开标
+							if(cur_phase == "4"){
+								var _currentTime=r.params.server_time;
+								_currentTime=_currentTime.replace(/-/g,"/");
+								var _etime=r.params.phase_end_time;
+								_etime=_etime.replace(/-/g,"/");
+								var _btime=r.params.phase_begin_time ;
+								_btime=_btime.replace(/-/g,"/");
+								if((new Date(_etime).getTime())!= (new Date(etime).getTime())){
+									nowTime=new Date(_currentTime).getTime();
+									btime=_btime;
+									etime=_etime;
+								}
+								window.clearInterval(landSetInterval);
+								countdown();
+
+							}else if(cur_phase == "0"||cur_phase == "1"||cur_phase == "2"||cur_phase == "6"){
+								countdown();
+							}else if(cur_phase=="3" || cur_phase=="7"){
+								countup();
+							}
+							phare=cur_phase;
+						}else if(phare == '4'){
+							var _etime=r.params.phase_end_time;
+							_etime=_etime.replace(/-/g,"/");
+							if((new Date(_etime).getTime())!= (new Date(etime).getTime())){
+								// window.location.reload();
+								var _currentTime=r.params.server_time;
+								_currentTime=_currentTime.replace(/-/g,"/");
+								var _btime=r.params.phase_begin_time ;
+								_btime=_btime.replace(/-/g,"/");
+								nowTime=new Date(_currentTime).getTime();
+								etime=_etime;
+								btime=_btime;
+								window.clearInterval(landSetInterval);
+								countdown();
+							}
+						}
+
+
+					} else {
+						$.Pop(r.msg, 'alert', function() {});
+					}
+				});
+	}
+  </script>
+  <script src="${basePath}/webwap/js/record.js"></script>
+  <script>
+  
+  var iframe = document.querySelectorAll('iframe')
+  
+  for(var i=0;i<iframe.length;i++){
+	  iframe[i].width=document.body.clientWidth - 24 + 'px'
+  }
+
+
+  </script>	
+</body>
+</html>

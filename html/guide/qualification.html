@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申请资格确认</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/register.css">
+</head>
+
+<body>
+    <div class="page-epf register">
+        <!-- 头部 -->
+<#include "/webwap/common/header.html">
+        <div class="content-core">
+            <div class="public-titel">
+                <div class="public-titel-word">申请资格确认</div>
+            </div>
+            <div class="register-content">
+                <div class="procedure">
+                    <div class="procedure-init">1、交款后竞买人可登录系统在"到账查询"页面查询到账情况。银行到账信息推送可能存在延迟，系统以银行到账时间为准。因此建议竞买人提前一定时间交款。</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp12.png" alt=""></div>
+                    <div class="procedure-init">2、订单保证金按时、足额到账后，订单状态会自动发生变化。下图中订单状态为"等待交易"。</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp13.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+<#include "../../cms/public/footerwap.html">
+        <!-- 隐藏导航栏 -->
+    </div>
+</body>
+<script src="${basePath}/webwap/js/jquery.min.js"></script>
+      <script src="${basePath}/webwap/js/mui.min.js"></script>
+      <script src="${basePath}/webwap/js/common.js"></script>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>我的交易</title>
+  <link rel="stylesheet" href="../front/css/mui.min.css">
+  <link rel="stylesheet" href="../front/css/mui.picker.min.css">
+  <link rel="stylesheet" href="../front/css/common.css" type="text/css">
+  <link rel="stylesheet" href="../front/css/homeHouseWap.css">
+
+
+</head>
+
+
+<body>
+  <!--国土资源交易-->
+  <div id="landBill" style="display:none">
+    <div class="mui-content mui-scroll-wrapper droploader land">
+      <div class="mui-scroll">
+        <div id="land_list" class="transaction-list"></div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <!-- 分界线 -->
+  <hr id="billSeparator" style="width: 1140px;height: 2px;border: 0;background: #ddd;margin: 10px auto;display:none">
+  <!-- 房产交易 -->
+  <div id="houseBill" class="transaction" style="display:none">
+    <div class="mui-content mui-scroll-wrapper droploader2 land">
+      <div class="mui-scroll">
+        <div id="house_list" class="transaction-list"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  <textarea id="land_collect" style="display: none">
+    <div class="transaction-item">
+
+      <div>
+        <div class="transaction-item-blue">
+          <span>宗地号：</span>
+          <span>@{target_name}</span>
+        </div>
+        <div class="transaction-item-blue">
+          <span>竞买编号：</span>
+          <span>@{license_no}</span>
+        </div>
+      </div>
+      <div class="transaction-item-banner">
+        <div class="img-contain">
+                <img src="../front/images/peitu1.png" class="land_title_img" />
+                <img src="../front/images/tab{if target_status_val==0}1{else}@{target_status_val}{/if}.png" alt="" class="land_title_img_label">
+                <img src="../front/images/720_1.png" alt="" class="land_title_img_rotate">
+        </div>
+        <div>
+          <div>
+            <span class="transaction-item-left">交易方式：</span>
+            <span class="transaction-item-right">@{trans_type_name}</span>
+          </div>
+          <div>
+            <span class="transaction-item-left">区域：</span>
+            <span class="transaction-item-right">福田区</span>
+          </div>
+          <div>
+            <span class="transaction-item-left">面积：</span>
+            <span class="transaction-item-right">@{goods_size}㎡</span>
+          </div>
+          <div>
+            <span class="transaction-item-left">用途：</span>
+            <span class="transaction-item-right">@{goods_use}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <span class="transaction-item-left">起始价：</span>
+          <span class="transaction-item-right">@{begin_price}元</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">竞买申请截止时间：</span>
+          <span class="transaction-item-right">@{end_apply_time}</span>
+        </div>
+
+        <div>
+          <span class="transaction-item-left">交易时间：</span>
+          <span class="transaction-item-right">2020.03.03&nbsp;16:30:00</span>
+        </div>
+        <div>
+        
+        
+          <div>
+          {if batch_type == 1}
+          <span class="transaction-item-left">挂牌截止时间：</span>
+          <span class="transaction-item-right">@{end_offer_time}</span>
+          {elseif batch_type == 6}
+          <span class="transaction-item-left">网络竞价开始时间：</span>
+          <span class="transaction-item-right">@{begin_offer_time}</span>
+          {else}
+          <span class="transaction-item-left">交易时间：</span>
+          <span class="transaction-item-right">@{begin_limit_time}</span>
+          {/if}
+        </div>
+          <span class="transaction-item-left">成交保证金：</span>
+          <span class="transaction-item-right">150,000元</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">已交保证金：</span>
+          <span class="transaction-item-right">@{pay_currency_label}@{pay_money}元</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">交易状态：</span>
+          <span class="transaction-item-right">@{order_phase}</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">收款户名：</span>
+          <span class="transaction-item-right">@{child_account_name}</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">收款银行：</span>
+          <span class="transaction-item-right">@{child_account_bank}</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">收款账户：</span>
+          <span class="transaction-item-right">@{child_account_no}  </span>
+        </div>
+      </div>
+
+    </div>
+    </textarea>
+
+  <textarea id="house_collect" style="display: none">
+    <div class="transaction-item">
+                {for target in targetList}
+                            <div>
+                                <div class="transaction-item-blue">
+                                    <span>订单号：</span>
+                                    <span>@{short_order_no}</span>
+                                </div>
+                                <div class="transaction-item-blue">
+                                    <span>场次：</span>
+                                    <span>@{year}第(@{batch_year_no})场房产@{batch_type_name}交易&nbsp;总第(@{batch_no})场</span>
+                                </div>
+                                   {var $index=0}
+           
+                                <div>
+                                    <span class="transaction-item-right">
+                                       @{target.target_name}
+                                    </span>
+                                    <span class="transaction-item-blue">
+                                        （竞买编号：@{target.license_no}）
+                                    </span>
+                                </div>
+                              
+                            </div>
+                            <div class="transaction-item-banner">
+                                <div style="position: relative;">
+                <img src="../front/images/peitu2.png" class="land_title_img" / style="width:100%;height:100%">
+                <img src="../front/images/tab{if target.is_suspend == 1}4{elseif target.target_status == 5}{if target.license_status == 4}6{else}2{/if}{elseif target.target_status == 6}3{else}1{/if}.png" alt="" class="land_title_img_label">
+                <img src="../front/images/720_1.png" alt="" class="land_title_img_rotate">
+                                </div>
+                                 
+                                <div>
+                                    <div>
+                                        <span class="transaction-item-left">交易方式：</span>
+                                        <span class="transaction-item-right">@{batch_type_name}</span>
+                                    </div>
+                                    <div>
+                                        <span class="transaction-item-left">区域：</span>
+                                        <span class="transaction-item-right">@{target.canton}</span>
+                                    </div>
+                                    <div>
+                                        <span class="transaction-item-left">面积：</span>
+                                        <span class="transaction-item-right">@{target.build_area2}㎡</span>
+                                    </div>
+                                    <div>
+                                        <span class="transaction-item-left">用途：</span>
+                                        <span class="transaction-item-right">@{target.goods_use}</span>
+                                    </div>
+                                </div>
+                            </div>
+                             
+                            <div>
+                                <div>
+                                    <span class="transaction-item-left">起始价：</span>
+                                    <span class="transaction-item-right">@{target.begin_price}元</span>
+                                </div>
+                                <div>
+                                    <span class="transaction-item-left">竞买申请截止时间：</span>
+                                    <span class="transaction-item-right">@{end_apply_time}</span>
+                                </div>
+                                 {if batch_type == 1}
+                                <div>
+                                    <span class="transaction-item-left">挂牌截止时间：</span>
+                                    <span class="transaction-item-right">@{end_offer_time}</span>
+                                </div>
+                               {elseif batch_type == 6}
+                                <div>
+                                    <span class="transaction-item-left">网络竞价开始时间：</span>
+                                    <span class="transaction-item-right">@{begin_offer_time}</span>
+                                </div>
+                                  {else}
+                                  <div>
+                                    <span class="transaction-item-left">交易时间：</span>
+                                    <span class="transaction-item-right">@{begin_limit_time}</span>
+                                </div>
+                                  {/if}
+                                <div>
+                                    <span class="transaction-item-left">成交保证金：</span>
+                                    <span class="transaction-item-right">150,000元</span>
+                                </div>
+                                <div>
+                                    <span class="transaction-item-left">已交保证金：</span>
+                                    <span class="transaction-item-right">@{pay_currency_label}@{pay_money}元</span>
+                                </div>
+                                <div>
+                                    <span class="transaction-item-left">交易状态：</span>
+                                    <span class="transaction-item-right">@{order_phase}</span>
+                                </div>
+                                <div>
+                                    <span class="transaction-item-left">收款户名：</span>
+                                    <span class="transaction-item-right">@{child_account_name}</span>
+                                </div>
+                                <div>
+                                    <span class="transaction-item-left">收款银行：</span>
+                                    <span class="transaction-item-right">@{child_account_bank}</span>
+                                </div>
+                                <div>
+                                    <span class="transaction-item-left">收款账户：</span>
+                                    <span class="transaction-item-right">@{child_account_no}</span>
+                                </div>
+                            </div>
+                                {/for}
+                        </div>
+  </textarea>
+
+  <textarea id="common_collect" style="display: none"><!-- 通用 -->
+            <div class="transaction-item">
+    
+      <div>
+        <div class="transaction-item-blue">
+          <span>标的：</span>
+          <span>@{target_name}</span>
+        </div>
+        <div class="transaction-item-blue">
+          <span>竞买编号：</span>
+          <span>@{license_no}</span>
+        </div>
+      </div>
+      <div class="transaction-item-banner">
+        <div class="img-contain">
+                <img src="../front/images/peitu1.png" class="land_title_img" />
+                <img src="../front/images/tab{if target_status_val==0}1{else}@{target_status_val}{/if}.png" alt="" class="land_title_img_label">
+                <img src="../front/images/720_1.png" alt="" class="land_title_img_rotate">
+        </div>
+        <div>
+          <div>
+            <span class="transaction-item-left">交易方式：</span>
+            <span class="transaction-item-right">@{trans_type_name}</span>
+          </div>
+
+
+          <div>
+            <span class="transaction-item-left">用途：</span>
+            <span class="transaction-item-right">@{goods_use}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+
+
+
+         {if trans_type == 1 || trans_type == 5 || trans_type == 2 || trans_type == 9 }
+          <div>  
+          <div> 
+            <span class="transaction-item-left">{if trans_type == 1}现场竞价开始时间{elseif trans_type == 5}限时竞价开始时间{else}投标截止时间{/if}：</span>
+            <span class="transaction-item-right">@{begin_limit_time}</span>
+          </div>
+            {if target_status == 5}
+          <div>
+          <span class="transaction-item-left">保证金截止时间：</span>
+          <span class="transaction-item-right">@{end_earnest_time}</span>
+         </div>
+          {/if}
+          <div>
+            <span class="transaction-item-left">起始价：</span>
+            <span class="transaction-item-right">@{short_trans_bidder_name}</span>
+           </div>
+           {if target_status == 5}
+           <div>
+            <span class="transaction-item-left">成交价：</span>
+            <span class="transaction-item-right">@{trans_price}元</span>
+           </div>
+           {/if}
+           <div>
+            <span class="transaction-item-left">竞买申请截止时间：</span>
+            <span class="transaction-item-right">@{end_apply_time}</span>
+           </div>
+   
+
+          </div>
+          {else} 
+          <div>
+   
+     
+            <div>
+            <span class="transaction-item-left">{if trans_type==4}网上报价{else}挂牌{/if} 开始时间：</span>
+            <span class="transaction-item-right">{if trans_type==1 || trans_type==2 || trans_type==9}-{else}@{begin_offer_time}{/if}</span>
+           </div>
+
+            <div>
+              <span class="transaction-item-left">起始价：</span>
+              <span class="transaction-item-right">@{begin_price}元</span>
+             </div>
+             {if target_status == 5}
+             <div> 
+              <span class="transaction-item-left">成交价：</span>
+              <span class="transaction-item-right">@{trans_price}元</span>
+             </div>
+             {/if}
+             <div>
+              <span class="transaction-item-left">保证金截止时间：</span>
+              <span class="transaction-item-right">@{end_earnest_time}</span>
+             </div>
+             {if trans_type == 0 || trans_type == 4}
+             <div>
+              <span class="transaction-item-left">{if trans_type ==0}挂牌{else}网上报价{/if}截止时间：</span>
+              <span class="transaction-item-right">@{end_offer_time}</span>
+             </div>
+             {/if}
+      
+             <div>
+              <span class="transaction-item-left">竞买申请截止时间：</span>
+              <span class="transaction-item-right">@{end_apply_time}</span>
+             </div>
+             <div>
+              <span class="transaction-item-left">{if trans_type == 0}现场竞价开始时间{elseif trans_type == 4}限时报价时间{else}交易时间{/if}：</span>
+              <span class="transaction-item-right">@{begin_limit_time}</span>
+             </div>
+             {if target_status == 5}
+             <div>
+              <span class="transaction-item-left">竞得人：</span>
+              <span class="transaction-item-right">@{short_trans_bidder_name}</span>
+             </div>
+             {/if}
+            </div>
+
+            {/if}      
+        <div>
+         
+          <span class="transaction-item-left">应交保证金：</span>
+          <span class="transaction-item-right">@{security_payable}元</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">已交保证金：</span>
+          <span class="transaction-item-right">@{pay_currency_label}@{pay_money}元</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">交易状态：</span>
+          <span class="transaction-item-right">@{order_phase}</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">收款户名：</span>
+          <span class="transaction-item-right">@{child_account_name}</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">收款银行：</span>
+          <span class="transaction-item-right">@{child_account_bank}</span>
+        </div>
+        <div>
+          <span class="transaction-item-left">收款账户：</span>
+          <span class="transaction-item-right">@{child_account_no}  </span>
+        </div>
+      </div>
+
+    </div>
+    </textarea>
+
+  <script src="../front/js/mui.min.js"></script>
+
+  <script type="text/javascript" src="../front/js/trimpath-template.js"></script>
+  <script type="text/javascript" src="js/json2.js"></script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/base.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript" src="js/ligerui.all.js"></script>
+  <script type="text/javascript" src="billWap.js"></script>
+  <script type="text/javascript" src="billUpload.js"></script>
+  <script type="text/javascript" src="../admin/start/layui/layui.all.js"></script>
+  <script type="text/javascript" src="../admin/start/layui/lay/modules/layer.js"></script>
+
+
+</body>
+
+</html>

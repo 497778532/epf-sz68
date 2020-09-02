@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结果公示详情</title>
+      <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/resultDetails.css">
+</head>
+<body>
+    <div class="resultDetails">
+        <!-- 头部 -->
+		<#include "/webwap/common/header.html">
+        <div class="content-core" style="min-height:70rem">
+            <div class="resultDetails-content">
+                <div class="resultDetails-title">${notice["NAME"]!}</div>
+                <div class="resultDetails-init">
+                    <div>
+                       <#if fileExtName??	&& fileExtName?length &gt; 0>
+                        		${fileExtName!}
+                        		<#else>
+                        		未找到对应出让结果信息！
+                        		
+                        	</#if>
+                    </div>
+                   
+                    <div class="ending" style="margin-top: 2rem;">深圳市土地房产交易中心</div>
+                    <div class="ending"><#if notice["CREATE_DATE"]??>${notice["CREATE_DATE"]?string('yyyy年M月dd日')}</#if></div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <!-- 隐藏导航栏 -->
+        <!-- 网站底部 -->
+          <#include "../../cms/public/footerwap.html">
+    </div>
+</body>
+    <script src="${basePath}/webwap/js/jquery.min.js"></script>
+    <script src="${basePath}/webwap/js/common.js"></script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航栏</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+     <#assign basePath=request.contextPath />
+    <#assign tradCode="0015"/><!-- 交易信息 -->
+	<#assign newsCode="0017" /><!-- 中心动态 -->
+	<#assign coreCode="0017-0001" /><!-- 中心动态 -->
+	<#assign policyCode="0029" /><!-- 政策法规 -->
+	<#assign guideCode="0020" /><!-- 交易指南 -->
+	<#assign noticeCode="0026" /><!-- 交易公告 -->
+	<#assign unCode="0000" /><!-- 不选中 -->
+</head>
+<body>
+    <div class="hideNavigation">
+        <div class="hideNavigation-item">
+            <!-- <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001"> -->
+          <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001">
+                <span>自然资源</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/getHouseTarget?code=0015-0002&childCode=0015-0002">
+                <span>房产交易</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/tradingnoticelist">
+                <span>交易公告</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/resultsnoticelist">
+                <span>结果公示</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/schedulelist">
+                <span>看标的日程安排</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <!-- <div class="hideNavigation-item">
+            <a href="${basePath}/web/getTransLiveBroadcast">
+                <span>交易直播</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div> -->
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/publishinfoslist?code=${guideCode}">
+                <span>交易指南</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/publishinfoslist?code=${newsCode}">
+                <span>中心动态</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/publishinfoslist?code=${policyCode}">
+                <span>政策法规</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="http://www.fair1.cn">
+                <span>房博会</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="http://pnr.sz.gov.cn/d-cyyf/">
+                <span>供需平台</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/infodetails?id=3d15b072-a24f-4291-b12e-84b0829c263f&amp;code=0017">
+                <span>关于中心</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+        <div class="hideNavigation-item">
+            <a href="${basePath}/wap/guide">
+                <span>交易指引</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div>
+    </div>
+</body>
+</html>

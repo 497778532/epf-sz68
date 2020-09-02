@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上申请</title>
+      <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/register.css">
+</head>
+
+<body>
+    <div class="page-epf register">
+        <!-- 头部 -->
+<#include "/webwap/common/header.html">
+        <div class="content-core">
+            <div class="public-titel">
+                <div class="public-titel-word">网上申请</div>
+            </div>
+            <div class="register-content">
+                <div class="procedure">
+                    <div class="procedure-init">1、访问首页登陆账号</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp4.png" alt=""></div>
+                    <div class="procedure-init">点击“我的交易”链接跳转到个人交易页面，可查看收藏和申请的标的。</div>
+                    <div class="procedure-init">点击“账号资料”链接可查看个人资料并进行修改。</div>
+                    <div class="procedure-init">2、选择标的进行申请</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp5.png" alt=""></div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp6.png" alt=""></div>
+                    <div class="procedure-init">3、输入信息后请勾选“我已阅读并同意《注册协议》”。</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp7.png" alt=""></div>
+                    <div class="procedure-init">点击“我要收藏”将当前标的添加至“我的收藏”中，稍后进行进一步处理。房产标的可以在“我的收藏”中进行批量申请，推荐使用。</div>
+                    <div class="procedure-init">点击“申请竞买”直接进行竞买申请。</div>
+                </div>
+            </div>
+        </div>
+<#include "../../cms/public/footerwap.html">
+        <!-- 隐藏导航栏 -->
+    </div>
+</body>
+<script src="${basePath}/webwap/js/jquery.min.js"></script>
+      <script src="${basePath}/webwap/js/mui.min.js"></script>
+      <script src="${basePath}/webwap/js/common.js"></script>
+</html>

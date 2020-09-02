@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账户资料</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/account.css">
+</head>
+
+<body>
+    <div class="page-epf account">
+    
+    
+    <div class="title-case">
+      <div>
+        <div><a href="##" id="headerLogo"><img src="front/images/logo_wps.png" alt=""></a></div>
+        <!-- 未登录 -->
+
+
+        <div class="logged">
+          <a href="/house/homeHouseWap.html">
+            <img src="front/images/wdjy-wap.png" alt="">
+            <span>我的交易</span>
+            </span>
+            <a>
+              <img src="front/images/zhzl-wap.png" alt="">
+              <span>账户资料</span>
+            </a>
+            <a onclick="logout()">
+              <img src="front/images/icon_quit.png" alt="">
+              <span>退出</span>
+            </a>
+        </div>
+      </div>
+      <div>
+        <img class="navigationMore" src="front/images/icon_wps.png" src1="front/images/icon_wps.png"
+          src2="front/images/icon_close.png" alt="">
+      </div>
+    </div>
+    <div class="hideNavigation">
+      <div class="hideNavigation-item">
+        <!-- <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001"> -->
+        <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001">
+          <span>自然资源</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="">
+          <span>房产交易</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/tradingnoticelist">
+          <span>交易公告</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/resultsnoticelist">
+          <span>结果公示</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/schedulelist">
+          <span>看标的日程安排</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <!-- <div class="hideNavigation-item">
+            <a href="${basePath}/web/getTransLiveBroadcast">
+                <span>交易直播</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div> -->
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${guideCode}">
+          <span>交易指南</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${newsCode}">
+          <span>中心动态</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${policyCode}">
+          <span>政策法规</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="http://www.fair1.cn">
+          <span>房博会</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="http://pnr.sz.gov.cn/d-cyyf/">
+          <span>供需平台</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/infodetails?id=3d15b072-a24f-4291-b12e-84b0829c263f&amp;code=0017">
+          <span>关于中心</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/jiaoyizhiyin/wap/tradingGuideList.html">
+          <span>交易指引</span>
+          <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+    </div>
+        <!-- 头部 -->
+
+        <div class="content-core">
+            <div class="trading-title">
+                <ul class="trading-title-ul jsTab" data-active="trading-title-active" data-model=".trading-content>div">
+                    <li class="trading-title-active">基本信息</li>
+                    <li>附件</li>
+                </ul>
+            </div>
+
+            <div class="trading-content">
+                <!-- 基本信息 -->
+                <div class="basic">
+                    <!-- 个人 -->
+                    <div class="personage">
+                        <div class="basic-init">
+                            <div class="basic-item">
+                                <div>注册账号</div>
+                                <div>Y520</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>姓名</div>
+                                <div>张三</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>户籍</div>
+                                <div>深户</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>身份证</div>
+                                <div>44135292829286626</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>移动电话</div>
+                                <div>1392256559</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>电子邮箱</div>
+                                <div>562356286@qq.com</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>通讯地址</div>
+                                <div>深圳罗湖区清水河街道</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>邮政编码</div>
+                                <div>-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 企业 -->
+                    <div class="enterprise">
+                        <div class="basic-init">
+                            <div class="basic-item">
+                                <div>注册账号</div>
+                                <div>Y520</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>企业名称</div>
+                                <div>深圳壹平台信息科技有限公司</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>注册地</div>
+                                <div>境内</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>法定代表人名称</div>
+                                <div>李四</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>法定代表人证件号码</div>
+                                <div>4413592959526625</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>统一社会信用代码</div>
+                                <div>5262662</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>联系人</div>
+                                <div>王五</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>联系人身份证号</div>
+                                <div>4413592959526625</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>移动电话</div>
+                                <div>1392256559</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>联系人电子邮箱</div>
+                                <div>562356286@qq.com</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>通讯地址</div>
+                                <div>深圳罗湖区清水河街道</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>邮政编码</div>
+                                <div>-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 联合 -->
+                    <div class="unite">
+                        <div class="basic-init">
+                            <div class="basic-item">
+                                <div>注册账号</div>
+                                <div>Y520</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>电子邮箱</div>
+                                <div>562356286@qq.com</div>
+                            </div>
+                            <div class="basic-item unite-btn">
+                                <button>联合竞买人1</button>
+                                <button>联合竞买人2</button>
+                            </div>
+                        </div>
+                        <div class="basic-init basic-init2">
+                            <div class="basic-item">
+                                <div>是否是企业</div>
+                                <div>是</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>姓名</div>
+                                <div>张三</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>户籍</div>
+                                <div>深户</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>证件号</div>
+                                <div>44516152626266661</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>移动电话</div>
+                                <div>139569599556</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>电子邮箱</div>
+                                <div>562695695@qq.com</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>通讯地址</div>
+                                <div>深圳罗湖区清水河街道</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>邮政编码</div>
+                                <div>-</div>
+                            </div>
+                            <div class="basic-item">
+                                <div>土地使用权所占份额</div>
+                                <div>50%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 更改密码 -->
+                    <div class="basic-init change">
+                        <div class="basic-item">
+                            <div>是否更改密码</div>
+                            <div class="whether">
+                                <label for="">
+                                    <input type="radio" name="whether" value="yes">
+                                    <span>是</span>
+                                </label>
+                                <label for="">
+                                    <input type="radio" name="whether" value="no" checked>
+                                    <span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="basic-item basic-item-init">
+                            <div>旧密码</div>
+                            <div>
+                                <input type="text" placeholder="请输入旧密码">
+                            </div>
+                        </div>
+                        <div class="basic-item basic-item-init">
+                            <div>新密码</div>
+                            <div>
+                                <input type="text" placeholder="请输入新密码">
+                            </div>
+                        </div>
+                        <div class="basic-item basic-item-init">
+                            <div>确认新密码</div>
+                            <div>
+                                <input type="text" placeholder="请输入新密码">
+                            </div>
+                        </div>
+                        <div class="basic-item basic-item-init basic-item-yzm">
+                            <div>验证码</div>
+                            <div>
+                                <button>获取验证码</button>
+                                <input type="text" placeholder="请输入验证码">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="save">
+                        保存
+                    </div>
+
+                </div>
+                <!-- 附件 -->
+
+                <div class="accessory">
+                    <div class="public-titel">
+                        <div class="public-titel-word">注册材料</div>
+                    </div>
+
+                    <!-- 个人 -->
+                    <div class="accessory-person">
+                        <div class="person-btn">
+                            <button class="person-active">联合竞买人1</button>
+                            <button>联合竞买人2</button>
+                            <button>公共材料</button>
+                        </div>
+                        <div class="person-content">
+                            <div>身份证正面.jpg</div>
+                            <div>身份证背面.jpg</div>
+                        </div>
+                    </div>
+
+                    <!-- 企业 -->
+                    <div class="accessory-firm">
+                        <a href="#">企业营业执照.jpg</a>
+                        <a href="#">法定代表人证明书.pdf</a>
+                        <a href="#">法定代表人证书.pdf</a>
+                        <a href="#">组织机构代码证件.doc</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- 隐藏导航栏 -->
+        <!-- 网站底部 -->
+
+    </div>
+
+    <script src="${basePath}/webwap/js/jquery.min.js"></script>
+    <script src="${basePath}/webwap/js/common.js"></script>
+    <script>
+        $('input[name="whether"]').change(function () {
+            if ($('input[name="whether"]:checked').val() === 'yes') {
+                $(this).parents(".basic-item").siblings(".basic-item-init").show();
+                $(this).parents(".change").siblings(".save").show();
+            }
+            if ($('input[name="whether"]:checked').val() === 'no') {
+                $(this).parents(".basic-item").siblings(".basic-item-init").hide();
+                $(this).parents(".change").siblings(".save").hide();
+            }
+
+        });
+        $(".person-btn>button").click(function(){
+            $(this).addClass("person-active").siblings("button").removeClass("person-active")
+        })
+    </script>
+</body>
+
+</html>

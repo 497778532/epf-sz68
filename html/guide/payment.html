@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<#assign basePath=request.contextPath />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>付款及履约保证金退转款</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    <link rel="stylesheet" href="${basePath}/webwap/css/register.css">
+</head>
+
+<body>
+    <div class="page-epf register">
+        <!-- 头部 -->
+<#include "/webwap/common/header.html">
+        <div class="content-core">
+            <div class="public-titel">
+                <div class="public-titel-word">履约保证金交纳</div>
+            </div>
+            <div class="register-content">
+                <div class="procedure">
+                    <div class="procedure-init">1、请根据系统提示，选择账户、交款银行，系统将自动生成入账申请单，竞买申请人需自行打印入账申请单，并按照入账申请单要求足额及时交纳保证金。</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp8.png" alt=""></div>
+                    <div class="procedure-init">输入竞买人名称、选择交款银行之后点击竞买申请。</div>
+                    <div class="procedure-init">2、入帐申请单</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp9.png" alt=""></div>
+                    <div class="procedure-init" style="margin-top: .2rem;">2.1、保证金账户内资金仅作为交易保证用途，不得结汇，不得用于质押贷款。</div>
+                    <div class="procedure-init" style="margin-top: .2rem;">2.2、保证金账户内资金不得以现钞存入。</div>
+                    <div class="procedure-init" style="margin-top: .2rem;">2.3、申请完成后返回的保证金账户为临时动态生成，每次竞买申请均不一样。附：汇款路线ACCOUNT BANK （SWIFT CODE）：PCBCCNBJSZX</div>
+                    <div class="procedure-init" style="margin-top: .2rem;">开户行名称 ：CHINA CONSTRUCTION BANK,SHENZHEN BRANCH, SHENZHEN,CHINA.</div>
+                    <div class="procedure-init" style="margin-top: .2rem;">
+                        地址：1/F LAND REAL ESTATE TRADING BUILDING 8007 HONGLI RD FUTIAN SHENZHEN CHINA
+                        BENEFICIARY： A/C NO. 44213800200220100623.
+                    </div>
+                    <div class="procedure-init" style="margin-top: .2rem;">NAME    深圳市土地房产交易中心</div>
+                    <div class="procedure-init" style="font-size: 1.2rem;">
+                        注意：收款人帐号和收款人名称必须与我行帐务系统中的要完全一致，
+                        帐号要连续书写，不用加空格、横线等， 帐号前后不用加币种等字符；
+                        收款人名称后若要加地址，请另起一行填写，不要与收款人名称连在一起。
+                        如能按标准填写， 系统将会自动处理，否则在我行的清算系统中需人工处理，
+                        有可能会延误入帐时间。
+                    </div>
+                    <div class="procedure-init" style="margin-top: .2rem;font-size: 1.2rem;">联系电话：0755-23934802</div>
+                    <div class="procedure-init">3、保证金到账后，竞买申请人如何了解保证金到账情况。</div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp10.png" alt=""></div>
+                    <div class="procedure-img"><img src="${basePath}/webwap/images/tp11.png" alt=""></div>
+                    <div class="procedure-init">竞买人汇入保证金款项后可以在“我的交易”相应标的信息中查询到交款情况，足额交纳保证金后挂牌期或网络竞价标的“我要报价”可用。</div>
+                    <div class="procedure-init">同时也可在“我的保证金”，查询保证金到账情况及到账时间。</div>
+                </div>
+            </div>
+        </div>
+<#include "../../cms/public/footerwap.html">
+        <!-- 隐藏导航栏 -->
+    </div>
+</body>
+<script src="${basePath}/webwap/js/jquery.min.js"></script>
+      <script src="${basePath}/webwap/js/mui.min.js"></script>
+      <script src="${basePath}/webwap/js/common.js"></script>
+</html>

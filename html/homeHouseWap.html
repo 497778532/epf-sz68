@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的交易</title>
+  <link rel="stylesheet" href="front/css/mui.min.css">
+  <link rel="stylesheet" href="front/css/mui.picker.min.css">
+  <link rel="stylesheet" href="front/css/common.css" type="text/css">
+  <link rel="stylesheet" href="front/css/homeHouseWap.css">
+
+  <link rel="stylesheet" href="admin/start/layui/css/modules/layer/default/layer.css" type="text/css">
+
+  <script type="text/javascript" src="js/json2.js"></script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/ligerui.all.js"></script>
+  <script type="text/javascript" src="js/baseWap.js"></script>
+  <script type="text/javascript" src="js/datepicker.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+
+  <script type="text/javascript" src="js/finance.js"></script>
+</head>
+
+<body scroll="no">
+
+  <div class="page-epf trading" style="height:100%">
+
+
+    <div class="title-case">	
+      <div>
+        <div><a href="##" id="headerLogo"><img src="front/images/logo_wps.png" alt=""></a></div>
+        <!-- 未登录 -->
+
+
+        <div class="logged">
+          <a id="myTradeId">
+            <img src="front/images/wdjy-wap.png" alt="">
+            <span>我的交易</span>
+            </span>
+      <a id="myinformation">
+              <img src="front/images/zhzl-wap.png" alt="">
+              <span>账户资料</span>
+            </a>
+          <span onclick="logout()" >
+              <img src="front/images/icon_quit.png" alt="">
+              <span>退出</span>
+            </span>	
+        </div>
+      </div>
+      <div>
+        <img class="navigationMore" src="front/images/icon_wps.png" src1="front/images/icon_wps.png"
+          src2="front/images/icon_close.png" alt="">
+      </div>
+    </div>
+    <div class="hideNavigation">
+      <div class="hideNavigation-item">
+        <!-- <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001"> -->
+        <a href="${basePath}/wap/getLandTarget?code=0015-0001&childCode=0015-0001">
+          <span>自然资源</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="">
+          <span>房产交易</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/tradingnoticelist">
+          <span>交易公告</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/resultsnoticelist">
+          <span>结果公示</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/schedulelist">
+          <span>看标的日程安排</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <!-- <div class="hideNavigation-item">
+            <a href="${basePath}/web/getTransLiveBroadcast">
+                <span>交易直播</span>
+                <img src="${basePath}/webwap/images/icon_next_wps.png" alt="">
+            </a>
+        </div> -->
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${guideCode}">
+          <span>交易指南</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${newsCode}">
+          <span>中心动态</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/publishinfoslist?code=${policyCode}">
+          <span>政策法规</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="http://www.fair1.cn">
+          <span>房博会</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="http://pnr.sz.gov.cn/d-cyyf/">
+          <span>供需平台</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/wap/infodetails?id=3d15b072-a24f-4291-b12e-84b0829c263f&amp;code=0017">
+          <span>关于中心</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+      <div class="hideNavigation-item">
+        <a href="${basePath}/jiaoyizhiyin/wap/tradingGuideList.html">
+          <span>交易指引</span>
+          <img src="front/images/icon_next_wps.png" alt="">
+        </a>
+      </div>
+    </div>
+
+    <!-- 头部 -->
+
+    <div class="content-core" style="height:calc(100% - 6.6rem);margin-top:1.6rem" >
+      <div class="trading-title">
+        <ul class="trading-title-ul jsTab" data-active="trading-title-active" data-model=".trading-content>div">
+          <li class="trading-title-active">我的交易</li>
+          <li>我的保证金</li>
+        </ul>
+      </div>
+
+      <div class="trading-content"   style="height:calc(100% - 4.9rem)">
+        <!-- 我的交易 -->
+        <div class="transaction">
+          <div class="transaction-title">
+            <ul class="transaction-title-ul jsTab" data-active="transaction-title-active">
+              <li class="transaction-title-active">
+                <div>自然资源交易</div>
+              </li>
+              <li>
+                <div>房产交易</div>
+              </li>
+            </ul>
+          </div>
+          <div class="transaction-list">
+
+            <iframe id="billIFrame" name="billIFrame" frameborder="0"    width="100%" 
+              scrolling="no"></iframe>
+
+          </div>
+        </div>
+        <!-- 我的保证金 -->
+        <div class="cash" style="height:100%">
+          <div class="cash-inquire" style="height:6rem;overflow:hidden">
+            <div class="cash-inquire-ipt">
+              <span>到账时间</span>
+
+              <input id="demo2"
+                data-options="{&quot;type&quot;:&quot;date&quot;,&quot;beginYear&quot;:1949,&quot;endYear&quot;:2020}"
+                class="btn mui-btn " placeholder="选择日期" />
+              <span id="time1" style="display:none">123</span>
+              <span>至</span>
+              <input id="demo3"
+                data-options="{&quot;type&quot;:&quot;date&quot;,&quot;beginYear&quot;:1949,&quot;endYear&quot;:2020}"
+                class="btn mui-btn font-16" placeholder="选择日期">
+
+            </div>
+            <div class="cash-inquire-btn">
+              <button onClick="query()">查询</button>
+              <button onClick="reset()">清空</button>
+            </div>
+          </div>
+
+          <div style="height:calc(100% - 6rem);position:relative">
+            <div class="mui-content mui-scroll-wrapper droploader">
+
+
+              <div class="mui-scroll">
+                <!--数据列表-->
+                <ul class=" mui-table-view-chevron nature-card result-list cash-list" id="house">
+
+                </ul>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 隐藏导航栏 -->
+  </div>
+
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="front/js/include.js"></script>
+  <script type="text/javascript" src="js/base.js"></script>
+  <script src="front/js/mui.min.js"></script>
+  <script src="front/js/mui.picker.min.js"></script>
+  <script src="homeHouseWap.js"></script>
+
+  <script>
+  
+  tiaimApproot=tiaimApproot+'/wap'
+  var logout=function (){
+	  
+   	 var cmd = new Command();
+        cmd.module = "sysman";
+        cmd.service = "User";
+        cmd.method = "clearUserSessionData";
+        cmd.success = function(data) {
+         window.$userInfo = null;
+         if(data.ifUserSSO == "1")
+         {
+          location.href = tiaimApproot+'/index?isClear=y&loginPop=0';
+         }
+         else
+         {
+       	  location.href = tiaimApproot+'/index?isClear=y&loginPop=0';
+         }
+        }
+        cmd.execute();
+   }
+
+    $(document).ready(function () {
+      $(".header img").each(function () {
+        var src = $(this).attr("src");
+        if (!comObj.isEmpty(src)) {
+          $(this).attr("src", approot + '/' + src);
+        }
+      })
+
+      $(".transaction-item-close").click(function () {
+        $(this).parents(".transaction-item").remove()
+      })
+      $("#headerLogo").attr('href', tiaimApproot + '/index');
+      var userInfo = getUserInfoObj();
+    
+      $(".hideNavigation-item:eq(0)").find(' a').attr('href', tiaimApproot + '/getLandTarget?code=0015-0001&amp;childCode=0015-0001');
+      $(".hideNavigation-item:eq(1)").find(' a').attr('href', tiaimApproot + '/getHouseTarget?code=0015-0002&amp;childCode=0015-0002');
+      $(".hideNavigation-item:eq(2)").find(' a').attr('href', tiaimApproot + '/tradingnoticelist');
+      $(".hideNavigation-item:eq(3)").find(' a').attr('href', tiaimApproot + '/resultsnoticelist');
+      $(".hideNavigation-item:eq(4)").find(' a').attr('href', tiaimApproot + '/schedulelist');
+
+      $(".hideNavigation>hideNavigation-item:eq(5)").find('a').attr('href', tiaimApproot + '/publishinfoslist?code=0020');
+      $(".hideNavigation>hideNavigation-item:eq(6)").find('a').attr('href', tiaimApproot + '/publishinfoslist?code=0017');
+      $(".hideNavigation>hideNavigation-item:eq(7)").find('a').attr('href', tiaimApproot + '/publishinfoslist?code=0029');
+      $(".hideNavigation>hideNavigation-item:eq(8)").find('a').attr('href', 'http://www.fair1.cn/main/fair1/current/index.html');
+      $(".hideNavigation>hideNavigation-item:eq(9)").find('a').attr('href', 'http://pnr.sz.gov.cn/d-cyyf/');
+      $(".hideNavigation>hideNavigation-item:eq(10)").find('a').attr('href', tiaimApproot + '/infodetails?id=3d15b072-a24f-4291-b12e-84b0829c263f&code=0017');
+      $(".hideNavigation>hideNavigation-item:eq(11)").find('a').attr('href', tiaimApproot + '/web/getTransTrackTarget?code=0033');
+
+      var userInfo = getUserInfoObj();
+      if(userInfo && userInfo.userId){
+      	$("#userName").text(userInfo.userName);
+      	$("#myinformation").attr('href',approot+'/myInformationWap.html?id='+userInfo.userId);
+          $("#myTradeId").attr('href',approot+'/homeHouseWap.html');
+
+      	$("#haveUser").hide();
+      	$("#noHaveUser").show();
+      }else{
+      	$("#userName").text("");
+      	$("#haveUser").show();
+      	$("#noHaveUser").hide();
+      }
+      $("#billIFrame").attr("src", "preparehouse/billWap.html");
+      billHeight()
+      var param = document.location.search;
+      if (param) {
+    	  
+        var flag = Utils.getUrlParamValue(param, "flag");
+        if (flag == 'earnest') {
+          earnest();
+          $(".search_item").eq(2).addClass('search_active').siblings().removeClass('search_active');
+        } else if (flag == 'collect') {
+          collect();
+          $(".search_item").eq(1).addClass('search_active').siblings().removeClass('search_active');
+        } else {
+          bill();
+          $(".search_item").eq(0).addClass('search_active').siblings().removeClass('search_active');
+        }
+      } else {
+        bill();
+        $(".search_item").eq(0).addClass('search_active').siblings().removeClass('search_active');
+      }
+    });
+ 
+    function billHeight() {
+    	  var billIFrame = document.getElementById("billIFrame");
+    	  var height=document.documentElement.clientHeight  
+    	  billIFrame.height=(height- 160)+'px'
+    	
+    }
+    function bill(){
+    	
+    }
+
+  </script>
+</body>
+
+</html>

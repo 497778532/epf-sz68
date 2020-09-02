@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<#assign basePath=request.contextPath />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>头部</title>
+    <link rel="stylesheet" href="${basePath}/webwap/css/common.css">
+    
+</head>
+<body>
+    <div class="title-case">
+        <div>
+            <div>
+            <a href="${basePath}/wap/index">
+         
+            <img src="${basePath}/webwap/images/logo_wps.png" alt="">
+               </a>
+            </div>
+            <!-- 未登录 -->
+            <div class="notLog" style="display:none"><button><a href="${basePath}/wap/login" >登录</a></button></div>
+            
+            <div class="logged" style="display:none" >
+                <span onclick="jumpCal()">
+                    <img src="${basePath}/webwap/images/wdjy.png" alt="">
+                    <span>我的交易</span>
+                </span>
+                <span onclick="personalData()">
+                    <img src="${basePath}/webwap/images/zhzl.png" alt="">
+                    <span>账户资料</span>
+                </span>
+                <span onclick="logout()">
+                    <img src="${basePath}/webwap/images/icon_quit.png" alt="">
+                    <span>退出</span>
+                </span>
+            </div>
+        </div>
+        <div>
+            <img class="navigationMore" src="${basePath}/webwap/images/icon_wps.png" src1="${basePath}/webwap/images/icon_wps.png" src2="${basePath}/webwap/images/icon_close.png" alt="">
+        </div>
+    </div>
+    <!-- 导航栏 -->
+     <#include "/webwap/common/hideNavigation.html">
+</body>
+<script src="${basePath}/tradewebpc/js/jquery.min.js"></script>
+<script src="${basePath}/tradewebpc/js/jQuery.md5.js"></script>
+<script src="${basePath}/tradewebpc/js/common.js"></script>
+<script src="${basePath}/webwap/js/login.js"></script>
+<script src="${basePath}/tradewebpc/js/pager.js"></script>
+<script src="${basePath}/tradewebpc/js/cookie.js"></script>
+<script src="${basePath}/tradewebpc/js/szca.js"></script>
+<script src="${basePath}/webwap/js/record.js"></script>
+</html>
